@@ -15,7 +15,7 @@ main {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  background-color: grey;
+  background-color: rgb(53, 82, 126);
 }
 
 .top-line p {
@@ -27,11 +27,11 @@ main {
 }
 
 .top-line .left p {
-  background-color: darkgoldenrod;
+  background-color: rgb(139, 126, 219);
 }
 
 .top-line .right p {
-  background-color: darkgoldenrod;
+  background-color: rgb(139, 126, 219);
   border-radius: 60px;
 }
 
@@ -44,7 +44,7 @@ main {
 }
 
 .info-sheet {
-  background-color: gainsboro;
+  background-color: rgb(159, 204, 255);
   display: grid;
   grid-template-columns: 2fr 1fr;
 }
@@ -98,7 +98,7 @@ main {
 }
 
 .location-destination p {
-  background-color: gray;
+  background-color: rgb(139, 126, 219);
   padding: 5px;
   border-radius: 50px;
   width: 100%;
@@ -107,14 +107,14 @@ main {
 }
 
 .right-side {
-  background-color: gray;
+  background-color: rgb(53, 82, 126);
   height: 100vh;
   overflow-y: scroll;
 }
 
 .roboter-list li {
   list-style: none;
-  background-color: gainsboro;
+  background-color: rgb(159, 204, 255);
 }
 
 .single-roboter img {
