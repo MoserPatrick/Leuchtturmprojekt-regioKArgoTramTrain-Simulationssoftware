@@ -1,12 +1,14 @@
+from utils import Constants as CON
+
 
 class Robot:
 #Constants
-    carryCap = CARRYCAP
-    homestation = HOMESTATION
+    carryCap = CON.CARRYCAP
+    homestation = CON.HOMESTATION
 
 #Constructor
     def __init__(self, id, pos, status, packageList):
-        self.id = id 
+        self.id = id
         self.position = pos
         self.batteryStatus = status
         self.status = status
