@@ -1,0 +1,2 @@
+HOMESTATION = "StationName"
+CARRYCAP = 20.0
