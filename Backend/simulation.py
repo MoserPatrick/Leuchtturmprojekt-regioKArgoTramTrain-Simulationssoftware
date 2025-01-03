@@ -1,5 +1,6 @@
 from Robot import Robot
 from package import Package
+from create_package import package_creator
 import random
 
 class Simulation:
@@ -11,7 +12,7 @@ class Simulation:
         stations = [] # LOAD: List of all Stations
         numb_robots = 3 # LOAD: load the config data
         robots = []
-        numb_package = 3 # LOAD: load the config number of Packages
+        numb_packages = 3 # LOAD: load the config number of Packages
         pos = (100, 50) # LOAD: load the real starting Position (Station)
         status = 100 # LOAD: 
         usage = 500 # LOAD:
@@ -19,30 +20,12 @@ class Simulation:
 
 
         for robots in numb_robots:
-            # Create packageList
-            packageList = []    
-            for i in range(numb_package):
-                '''# Random Package Generator
-                # get weigth
-                weight = random.uniform(1.0, 100,0)
-                # get width
-                width = random.uniform(1.0, 50,0
-                # get height
-                height = random.uniform(1.0, 30,0)
-                # get lenght
-                length = random.uniform(1.0, 70,0))
-                # get destination
-                dest = random.choice(stations)
-
-                # create Package
-                package = Package(weigth, width, height, length, dest)
-                packageList.append(package)
-                '''
-                # Filler Data package Generator
-                package = Package(20, 30, 10, 50, (100,100))
-                packageList.append(package)
+            # Create package_list
+            package_list = []    
+            # creating packages 
+            package_list = package_creator.create_package(numb_packages, capacity, package_list)
             
-            robot = Robot(robots, pos, status, packageList, usage, capacity)
+            robot = Robot(robots, pos, status,  package_list, usage, capacity)
             robots.append(robot)
 
 
