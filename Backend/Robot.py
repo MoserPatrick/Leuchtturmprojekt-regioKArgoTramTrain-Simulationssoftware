@@ -7,12 +7,14 @@ class Robot:
     homestation = CON.HOMESTATION
 
 #Constructor
-    def __init__(self, id, pos, status, packageList):
+    def __init__(self, id, pos, status, packageList, usage, capacity):
         self.id = id
         self.position = pos
         self.batteryStatus = status
         self.status = status
         self.packageList = packageList
+        self.usage = usage
+        self.capacity = capacity
         
         
 #Methods
