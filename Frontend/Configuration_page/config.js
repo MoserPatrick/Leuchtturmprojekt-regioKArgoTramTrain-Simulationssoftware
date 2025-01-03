@@ -25,9 +25,11 @@ document.getElementById('config-form').addEventListener('submit', function (e) {
         });
     }
 
-    // Speichern in Local Storage (oder später POST an Backend)
+    // Speichern in Local Storage
     localStorage.setItem('robots', JSON.stringify(robots));
 
     // Weiter zur Simulation-Seite
     window.location.href = 'simulation.html';
 });
+
+console.log("config.js is loaded and working!");
