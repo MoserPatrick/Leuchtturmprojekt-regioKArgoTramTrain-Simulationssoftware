@@ -14,20 +14,27 @@ class Simulation:
         robots = []
         numb_packages = 3 # LOAD: load the config number of Packages
         pos = (100, 50) # LOAD: load the real starting Position (Station)
-        status = 100 # LOAD: from config
+        battery = 100 # LOAD: from config
         usage = 500 # LOAD: load from config
         capacity = 30 # LOAD: load form config
+        status = "idle"
+        dest = None
+        speed = 1
 
 
-        for robots in numb_robots:
+        for i in range(numb_robots):
             # Create package_list
             package_list = []    
             # creating packages 
             package_list = package_creator.create_package(numb_packages, capacity, package_list)
+            print(package_list)
             
-            robot = Robot(robots, pos, status,  package_list, usage, capacity)
+            robot = Robot(i+1, pos, battery, numb_packages, package_list, usage, capacity, status, dest, speed)
             robots.append(robot)
+            print("robot" )
+            print(robots)
 
+        robot.charge()
 
         pass
 
