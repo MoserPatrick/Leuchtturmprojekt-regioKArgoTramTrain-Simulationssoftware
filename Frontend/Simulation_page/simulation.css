@@ -1,0 +1,129 @@
+p {
+    margin: 0px;
+  }
+  
+  .container-fluid {
+    padding: 0px;
+  }
+  
+  main {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+  }
+  
+  .top-line {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: rgb(53, 82, 126);
+  }
+  
+  .top-line p {
+    padding: 5px;
+  }
+  
+  .top-line .d-flex {
+    gap: 70px;
+  }
+  
+  .top-line .left p {
+    background-color: rgb(139, 126, 219);
+  }
+  
+  .top-line .right p {
+    background-color: rgb(139, 126, 219);
+    border-radius: 60px;
+  }
+  
+  .img-fluid {
+    max-height: 60vh;
+  }
+  
+  .roboter-info {
+    max-height: 40vh;
+  }
+  
+  .info-sheet {
+    background-color: rgb(159, 204, 255);
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+  }
+  
+  .single-icon {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .info-icons img {
+    max-width: 50px;
+    object-fit: cover;
+    max-height: 50px;
+  }
+  
+  .info-icons {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 10px;
+    height: 34.9vh;
+  }
+  
+  .location-destination img {
+    height: 20px;
+  }
+  
+  .location-destination {
+    justify-content: flex-end;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 10px;
+    gap: 10px;
+  }
+  
+  .location {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-right: 20px;
+  }
+  
+  .destination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 20px;
+  }
+  
+  .location-destination p {
+    background-color: rgb(139, 126, 219);
+    padding: 5px;
+    border-radius: 50px;
+    width: 100%;
+    justify-content: center;
+    display: flex;
+  }
+  
+  .right-side {
+    background-color: rgb(53, 82, 126);
+    height: 100vh;
+    overflow-y: scroll;
+  }
+  
+  .roboter-list li {
+    list-style: none;
+    background-color: rgb(159, 204, 255);
+  }
+  
+  .single-roboter img {
+    max-width: 50px;
+  }
+  
+  .roboter-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
