@@ -1,35 +1,35 @@
-document.getElementById('config-form').addEventListener('submit', function (e) {
+// Event-Listener für den "Start Simulation"-Button
+document.getElementById("startSimulation").addEventListener("click", function (e) {
     e.preventDefault();
 
-    // Parameter erfassen
-    const numRobots = document.getElementById('robots').value;
-    const numPackages = document.getElementById('packages').value;
+    // Parameter aus den Eingabefeldern erfassen
+    const robots = document.getElementById('robots').value;
+    const packages = document.getElementById('packages').value;
     const battery = document.getElementById('battery').value;
     const energy = document.getElementById('energy').value;
     const capacity = document.getElementById('capacity').value;
     const speed = document.getElementById('speed').value;
 
-    // Roboter-Objekte erstellen
-    let robots = [];
-    for (let i = 0; i < numRobots; i++) {
-        robots.push({
+    // Roboter-Objekte erstellen und in ein Array packen
+    let robotConfig = [];
+    for (let i = 0; i < robots; i++) {
+        robotConfig.push({
             id: i + 1,
-            position: [0, 0], // Startposition
+            position: [0, 0], // Startposition 
             battery: parseFloat(battery),
             energyUsage: parseFloat(energy),
             loadCapacity: parseFloat(capacity),
-            currentLoad: Math.floor(Math.random() * numPackages), // Zufällige Paketanzahl fürs testen
+            currentLoad: 0, // Anfangswert für Ladung
             speed: parseFloat(speed),
-            target: null, // Zielstation
-            status: 'idle', // Status: idle, moving, loading
+            target: null, // Ziel wird später gesetzt
+            status: 'idle' // Status: idle, moving, loading
         });
     }
 
-    // Speichern in Local Storage
-    localStorage.setItem('robots', JSON.stringify(robots));
+    // Parameter im Local Storage speichern
+    localStorage.setItem('robots', JSON.stringify(robotConfig));
+    localStorage.setItem('packages', packages);
 
-    // Weiter zur Simulation-Seite
-    window.location.href = 'simulation.html';
+    // Weiterleitung zur Simulation-Seite
+    window.location.href = "../Simulation_page/simulation.html";
 });
-
-console.log("config.js is loaded and working!");

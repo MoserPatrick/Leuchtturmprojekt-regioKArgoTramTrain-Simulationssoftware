@@ -1,7 +1,10 @@
-// Roboter-Daten laden
-let robots = JSON.parse(localStorage.getItem('robots')) || [];
+// Werte aus dem Local Storage abrufen
+let robots = JSON.parse(localStorage.getItem('robots'));
+let packages = localStorage.getItem('packages');
 
-// Alle Roboter anzeigen
-robots.forEach(robot => {
-    console.log(`Roboter ${robot.id} hat ${robot.currentLoad} Pakete und ${robot.battery}% Batterie.`);
-});
+// Beispielausgabe in der Konsole
+console.log(robots); // Array mit Roboter-Objekten
+console.log(`Packages: ${packages}`);
+
+
+
