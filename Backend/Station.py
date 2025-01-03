@@ -1,17 +1,28 @@
 import heapq
 class Station:
-    def __init__(self, name, trias_id = None, lines = None, coordinates = None) :
+    def __init__(self, name, trias_id = None, coordinates = None) :
         self.name = name
         self.trias_id = trias_id
-        self.lines = lines
+        self.lines = []
         self.coodinates = coordinates
         self.connections = [] # Liste von Verbindungen (Zielstation, Gewicht, Linie)
 
     def add_connection(self, target_station, time, line) :
         self.connections.append((target_station, time, line))
+
+    def add_line(self, line):
+        self.lines.append(line)
+
+    def get_lines(self):
+        return self.lines
     
     def get_connection(self) :
          return self.connections
+    
+    def get_name(self):
+        return self.name
+    def get_triasID(self):
+        return self.trias_id
 
 def dijkstra(start_station, target_station):
     pq = []
