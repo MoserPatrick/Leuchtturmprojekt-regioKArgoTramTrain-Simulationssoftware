@@ -1,4 +1,5 @@
 from package import Package
+import random
 
 class package_creator:
 

@@ -1,7 +1,7 @@
 from Robot import Robot
 from package import Package
 from create_package import package_creator
-import random
+
 
 class Simulation:
 
@@ -14,9 +14,9 @@ class Simulation:
         robots = []
         numb_packages = 3 # LOAD: load the config number of Packages
         pos = (100, 50) # LOAD: load the real starting Position (Station)
-        status = 100 # LOAD: 
-        usage = 500 # LOAD:
-        capacity = 30 # LOAD:
+        status = 100 # LOAD: from config
+        usage = 500 # LOAD: load from config
+        capacity = 30 # LOAD: load form config
 
 
         for robots in numb_robots:
