@@ -1,9 +1,26 @@
 from package import Package
 import random
+import requests
 
 class package_creator:
 
-# TODO get capacity is missing
+    # get capacity 
+    url = "http://127.0.0.1:5000/config"
+
+    # Send a GET request to the server
+    response = requests.get(url)
+
+    # Check if the request was successful
+    if response.status_code == 200:
+        # Parse and print the JSON response
+        data = response.json()
+        print("Retrieved Data:", data)
+        capacity = data.get("capacity")
+        print("capacity: ", capacity)
+    else:
+        print(f"Error: Received status code {response.status_code}")
+        print("Message:", response.text)
+
     def create_package(numb_packages, package_list):
         for i in range(numb_packages):
             '''# Random Package Generator

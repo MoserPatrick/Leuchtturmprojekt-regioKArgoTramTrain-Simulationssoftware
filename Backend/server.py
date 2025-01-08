@@ -6,7 +6,7 @@ app = Flask(__name__)
 # helper Functions
 def fetch_data_from_db(query, params=()):
      # Connect to the SQLite database
-    conn = sqlite3.connect('datenbank.db')
+    conn = sqlite3.connect('simulation.db')
     cursor = conn.cursor()
 
     # Execute the query with optional parameters
@@ -33,7 +33,7 @@ def get_config():
     config = {
         'numb_robots': row[0],
         'max_packages': row[1],
-        'battery': row(2),
+        'battery': row[2],
         'capacity': row[3],
         'sim_speed': row[4],
         'usage': row[5]
@@ -91,7 +91,7 @@ def add_config():
             return jsonify({"error": f"Missing required fields: {', '.join(missing_fields)}"}), 400
 
         # Insert data into the SQLite database
-        conn = sqlite3.connect('datenbank.db')
+        conn = sqlite3.connect('simulation.db')
         cursor = conn.cursor()
         cursor.execute('''
             INSERT INTO config (numb_robots, max_packages, battery, capacity, sim_speed, usage)
@@ -132,7 +132,7 @@ def add_robots():
             return jsonify({"error": f"Missing required fields: {', '.join(missing_fields)}"}), 400
 
         # Insert data into the SQLite database
-        conn = sqlite3.connect('datenbank.db')
+        conn = sqlite3.connect('simulation.db')
         cursor = conn.cursor()
         cursor.execute('''
             INSERT INTO config (id, position, energy, numb_packages, package_list, status, dest, speed)
@@ -165,7 +165,7 @@ def update_robots(robot_id):
             return jsonify({"error": f"Missing required fields: {', '.join(missing_fields)}"}), 400
 
         # Establish database connection
-        conn = sqlite3.connect('datenbank.db')
+        conn = sqlite3.connect('simulation.db')
         cursor = conn.cursor()
 
         # Build the update query based on the provided data
@@ -219,7 +219,7 @@ def update_config():
             return jsonify({"error": f"Missing required fields: {', '.join(missing_fields)}"}), 400
 
         # Establish database connection
-        conn = sqlite3.connect('datenbank.db')
+        conn = sqlite3.connect('simulation.db')
         cursor = conn.cursor()
 
         # Build the update query based on the provided data
