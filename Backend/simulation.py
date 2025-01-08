@@ -39,7 +39,6 @@ class Simulation:
             package_list = []    
             # creating packages 
             package_list = package_creator.create_package(max_packages, package_list)
-            print(package_list)
             
             robot = Robot(i+1, pos, energy, max_packages, package_list, status, dest, speed, weight)
             json_robot = robot.to_dict()
@@ -54,9 +53,6 @@ class Simulation:
                 print("Message:", response.text)
 
             robots.append(robot)
-            print(json_robot)
-            print("robot" )
-            print(robot.to_dict)
 
         #robot.charge()
 

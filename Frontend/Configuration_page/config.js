@@ -3,44 +3,42 @@ document.getElementById("startSimulation").addEventListener("click", function (e
     e.preventDefault();
 
     // Parameter aus den Eingabefeldern erfassen
-    const robots = document.getElementById('robots').value;
-    const packages = document.getElementById('packages').value;
+    const numb_robots = document.getElementById('robots').value;
+    const max_packages = document.getElementById('packages').value;
     const battery = document.getElementById('battery').value;
-    const energy = document.getElementById('energy').value;
     const capacity = document.getElementById('capacity').value;
-    const speed = document.getElementById('speed').value;
+    const sim_speed = document.getElementById('speed').value;
+    const usage = document.getElementById('energy').value;
 
-    // Roboter-Objekte erstellen und in ein Array packen
-    let robotConfig = [];
-    for (let i = 0; i < robots; i++) {
-        robotConfig.push({
-            id: i + 1,
-            position: [0, 0], // Startposition 
-            battery: parseFloat(battery),
-            energyUsage: parseFloat(energy),
-            loadCapacity: parseFloat(capacity),
-            currentLoad: 0, // Anfangswert für Ladung
-            speed: parseFloat(speed),
-            target: null, // Ziel wird später gesetzt
-            status: 'idle' // Status: idle, moving, loading
-        });
-    }
+    // Send Data to database
+    url = "http://127.0.0.1:5000/config"
 
-    // send data to server
+    config = [numb_robots, max_packages, battery, usage, capacity, sim_speed]
+    
+        // Asynchronous function to send POST request with JSON data
     async function sendJSONStringWithPOST(url, jsonString) {
-        const response = await fetch(url, {
-          method: 'POST',
-          body: jsonString,
-        });
+      try {
+          const response = await fetch(url, {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'  // This is crucial to tell the server we are sending JSON
+              },
+              body: jsonString  // Sending the raw JSON string
+          });
+
+          // Wait for the response and parse it as JSON
+          const data = await response.json();  // This will be the response data from the server
+
+          console.log('Response:', data);  // Handle the server response here
+      } catch (error) {
+          console.error('Error:', error);  // Catch and log any error
       }
-
-    sendJSONStringWithPOST()
-    // sendJSONStringWithPOST("http://localhost:3000/Bestellungen", JSON.stringify(aufschrieb));
-
-    // Parameter im Local Storage speichern
-    localStorage.setItem('robots', JSON.stringify(robotConfig));
-    localStorage.setItem('packages', packages);
+    }
+    console.log("CONFIGURATION")
+    console.log(config)
+    console.log(JSON.stringify(config))
+    sendJSONStringWithPOST(url, JSON.stringify(config))
 
     // Weiterleitung zur Simulation-Seite
-    window.location.href = "../Simulation_page/simulation.html";
+    //window.location.href = "../Simulation_page/simulation.html";
 });

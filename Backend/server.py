@@ -1,11 +1,13 @@
 from flask import Flask, jsonify, request
+from flask_cors import CORS
 import sqlite3
 import json
 from package import Package
 from Robot import Robot
 
 app = Flask(__name__)
-
+CORS(app, origins=["http://127.0.0.1:5500"])
+CORS(app, origins=["http://127.0.0.1:5000"])
 # helper Functions
 def fetch_data_from_db(query, params=()):
      # Connect to the SQLite database
@@ -29,7 +31,6 @@ def insert_robot(robot):
 
     # Serialize the package_list to a JSON string
     package_list_json = json.dumps([package.to_dict() for package in robot.package_list])
-    print(package_list_json)
     
     # Insert robot into the database
     cursor.execute('''
@@ -97,18 +98,18 @@ def add_config():
         data = request.get_json()
 
         # Extract individual fields from the JSON data
-        numb_robots = data.get('numb_robots')
+        ''' numb_robots = data.get('numb_robots')
         max_packages = data.get('max_packages')
         battery = data.get('battery')
         capacity = data.get('capacity')
-        sim_speed = data.get('max_packages')
-        usage = data.get('usage')
-
-        # Validate that required fields are provided
-        required_fields = ['numb_robots', 'max_packages', 'battery', 'capacity', 'sim_speed', 'usage']
-        missing_fields = [field for field in required_fields if not data.get(field)]
-        if missing_fields:
-            return jsonify({"error": f"Missing required fields: {', '.join(missing_fields)}"}), 400
+        sim_speed = data.get('sim_speed')
+        usage = data.get('usage')'''
+        numb_robots = data[0]
+        max_packages = data[1]
+        battery = data[2]
+        capacity = data[3]
+        sim_speed = data[4]
+        usage = data[5]
 
         # Insert data into the SQLite database
         conn = sqlite3.connect('simulation.db')
