@@ -3,7 +3,8 @@ import random
 
 class package_creator:
 
-    def create_package(numb_packages, capacity, package_list):
+# TODO get capacity is missing
+    def create_package(numb_packages, package_list):
         for i in range(numb_packages):
             '''# Random Package Generator
             # get weigth

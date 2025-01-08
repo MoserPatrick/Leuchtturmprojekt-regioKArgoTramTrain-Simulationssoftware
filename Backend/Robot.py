@@ -10,13 +10,13 @@ class Robot:
     homestation = CON.HOMESTATION
 
 #Constructor
-    def __init__(self, id, pos, energy, numb_packages, package_list, capacity, status, dest, speed):
+    def __init__(self, id, pos, energy, numb_packages, package_list, weight, status, dest, speed):
         self.id = id
         self.position = pos
-        self.battery = energy
+        self.energy = energy
         self.numb_packages = numb_packages
         self.package_list = package_list
-        self.capacity = capacity
+        self.weight = weight
         self.status = status
         self.dest = dest
         self.speed = speed
@@ -48,5 +48,5 @@ class Robot:
         del self.package_list[0]
         pass
     def loadPackage(self):
-        self.package_list = package_creator.create_package(self.numb_packages, self.capacity, self.package_list)
+        self.package_list = package_creator.create_package(self.numb_packages, self.package_list)
         pass

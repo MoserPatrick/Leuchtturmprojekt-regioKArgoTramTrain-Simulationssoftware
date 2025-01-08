@@ -1,6 +1,7 @@
 from Robot import Robot
 from package import Package
 from create_package import package_creator
+import db
 
 
 class Simulation:
@@ -16,7 +17,7 @@ class Simulation:
         pos = (100, 50) # LOAD: load the real starting Position (Station)
         energy = 100 # LOAD: from config
         usage = 500 # LOAD: load from config
-        capacity = 30 # LOAD: load form config
+        weight = 0 # LOAD: load form config
         status = "idle"
         dest = None
         speed = 1
@@ -26,10 +27,10 @@ class Simulation:
             # Create package_list
             package_list = []    
             # creating packages 
-            package_list = package_creator.create_package(numb_packages, capacity, package_list)
+            package_list = package_creator.create_package(numb_packages, package_list)
             print(package_list)
             
-            robot = Robot(i+1, pos, energy, numb_packages, package_list, capacity, status, dest, speed)
+            robot = Robot(i+1, pos, energy, numb_packages, package_list, weight, status, dest, speed)
             robots.append(robot)
             print("robot" )
             print(robots)
