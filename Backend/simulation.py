@@ -14,7 +14,7 @@ class Simulation:
         robots = []
         numb_packages = 3 # LOAD: load the config number of Packages
         pos = (100, 50) # LOAD: load the real starting Position (Station)
-        battery = 100 # LOAD: from config
+        energy = 100 # LOAD: from config
         usage = 500 # LOAD: load from config
         capacity = 30 # LOAD: load form config
         status = "idle"
@@ -29,7 +29,7 @@ class Simulation:
             package_list = package_creator.create_package(numb_packages, capacity, package_list)
             print(package_list)
             
-            robot = Robot(i+1, pos, battery, numb_packages, package_list, usage, capacity, status, dest, speed)
+            robot = Robot(i+1, pos, energy, numb_packages, package_list, capacity, status, dest, speed)
             robots.append(robot)
             print("robot" )
             print(robots)

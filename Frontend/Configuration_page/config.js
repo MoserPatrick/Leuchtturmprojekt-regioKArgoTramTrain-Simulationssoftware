@@ -26,6 +26,17 @@ document.getElementById("startSimulation").addEventListener("click", function (e
         });
     }
 
+    // send data to server
+    async function sendJSONStringWithPOST(url, jsonString) {
+        const response = await fetch(url, {
+          method: 'POST',
+          body: jsonString,
+        });
+      }
+
+    sendJSONStringWithPOST()
+    // sendJSONStringWithPOST("http://localhost:3000/Bestellungen", JSON.stringify(aufschrieb));
+
     // Parameter im Local Storage speichern
     localStorage.setItem('robots', JSON.stringify(robotConfig));
     localStorage.setItem('packages', packages);
