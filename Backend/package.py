@@ -9,7 +9,7 @@ class Package:
         self.destination = destination
     
     def to_dict(self):
-        # Convert Task object to a dictionary
+        # Convert Package object to a dictionary
         return {
             "weight": self.weight,
             "width": self.width,

@@ -40,5 +40,5 @@ document.getElementById("startSimulation").addEventListener("click", function (e
     sendJSONStringWithPOST(url, JSON.stringify(config))
 
     // Weiterleitung zur Simulation-Seite
-    //window.location.href = "../Simulation_page/simulation.html";
+    window.location.href = "../Simulation_page/simulation.html";
 });
