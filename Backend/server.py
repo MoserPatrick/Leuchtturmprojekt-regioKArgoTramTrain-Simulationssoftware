@@ -29,7 +29,8 @@ def insert_robot(robot):
 
     # Serialize the package_list to a JSON string
     package_list_json = json.dumps([package.to_dict() for package in robot.package_list])
-
+    print(package_list_json)
+    
     # Insert robot into the database
     cursor.execute('''
             INSERT INTO robots (id, position, energy, numb_packages, package_list, status, dest, speed, weight)

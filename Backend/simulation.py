@@ -19,7 +19,7 @@ class Simulation:
 
         # Robot Data
         id = 1
-        pos = (100, 50) # LOAD: load the real starting Position (Station)
+        pos = "(100, 50)" # LOAD: load the real starting Position (Station)
         energy = 100 # LOAD: from config
         numb_packages =1
         package_list = 1
@@ -54,6 +54,7 @@ class Simulation:
                 print("Message:", response.text)
 
             robots.append(robot)
+            print(json_robot)
             print("robot" )
             print(robot.to_dict)
 
