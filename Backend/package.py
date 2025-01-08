@@ -7,4 +7,14 @@ class Package:
         self.height = height
         self.length = length
         self.destination = destination
+    
+    def to_dict(self):
+        # Convert Task object to a dictionary
+        return {
+            "weight": self.weight,
+            "width": self.width,
+            "height": self.height,
+            "length": self.length,
+            "destination": self.destination
+        }
         

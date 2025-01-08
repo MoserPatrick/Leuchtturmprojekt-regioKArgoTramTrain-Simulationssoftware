@@ -1,5 +1,8 @@
 from flask import Flask, jsonify, request
 import sqlite3
+import json
+from package import Package
+from Robot import Robot
 
 app = Flask(__name__)
 
@@ -19,6 +22,21 @@ def fetch_data_from_db(query, params=()):
     conn.close()
 
     return rows
+
+def insert_robot(robot):
+    conn = sqlite3.connect('simulation.db')
+    cursor = conn.cursor()
+
+    # Serialize the package_list to a JSON string
+    package_list_json = json.dumps([package.to_dict() for package in robot.package_list])
+
+    # Insert robot into the database
+    cursor.execute('''
+            INSERT INTO robots (id, position, energy, numb_packages, package_list, status, dest, speed, weight)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ''', (robot.id, robot.position, robot.energy, robot.numb_packages, package_list_json, robot.status, robot.dest, robot.speed, robot.weight))  # Use placeholders to avoid SQL injection
+    conn.commit()
+    conn.close()
 
 @app.route('/config', methods=['GET'])
 def get_config():
@@ -61,7 +79,8 @@ def get_robots():
             'package_list': row[4],
             'status': row[5],
             'dest': row[6],
-            'speed': row[7]
+            'speed': row[7],
+            'weight': row[8]
         }
         robots.append(robot)
 
@@ -94,7 +113,7 @@ def add_config():
         conn = sqlite3.connect('simulation.db')
         cursor = conn.cursor()
         cursor.execute('''
-            INSERT INTO config (numb_robots, max_packages, battery, capacity, sim_speed, usage)
+            INSERT INTO configuration (numb_robots, max_packages, battery, capacity, sim_speed, usage)
             VALUES (?, ?, ?, ?, ?, ?)
         ''', (numb_robots, max_packages, battery, capacity, sim_speed, usage))  # Use placeholders to avoid SQL injection
         conn.commit()
@@ -124,24 +143,33 @@ def add_robots():
         status = data.get('status')
         dest = data.get('dest')
         speed = data.get('speed')
+        weight = data.get('weight')
 
         # Validate that required fields are provided
-        required_fields = ['id', 'position', 'energy', 'numb_packages', 'package_list', 'status', 'dest', 'speed']
+        required_fields = ['id', 'position', 'energy', 'numb_packages', 'package_list', 'status', 'dest', 'speed', 'weight']
         missing_fields = [field for field in required_fields if not data.get(field)]
         if missing_fields:
             return jsonify({"error": f"Missing required fields: {', '.join(missing_fields)}"}), 400
+        # Convert the 'package_list' (which is a list of dictionaries) to Package objects
+        package_list = [Package(p['weight'], p['width'], p['height'], p['length'], p['destination'],) for p in data['package_list']]
+
+        # Create the Robot object
+        robot = Robot(id=id, position=position, energy=energy, numb_packages=numb_packages, package_list=package_list, status=status, dest=dest, speed=speed, weight=weight)
+
+        # Call the insert_robot function to insert the robot into the database
+        insert_robot(robot)
 
         # Insert data into the SQLite database
-        conn = sqlite3.connect('simulation.db')
-        cursor = conn.cursor()
-        cursor.execute('''
-            INSERT INTO config (id, position, energy, numb_packages, package_list, status, dest, speed)
-            VALUES (?, ?, ?, ?, ?, ?)
-        ''', (id, position, energy, numb_packages, package_list, status, dest, speed))  # Use placeholders to avoid SQL injection
-        conn.commit()
+        #conn = sqlite3.connect('simulation.db')
+        #cursor = conn.cursor()
+        #cursor.execute('''
+        #    INSERT INTO robots (id, position, energy, numb_packages, package_list, status, dest, speed, weight)
+        #    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        #''', (id, position, energy, numb_packages, package_list, status, dest, speed, weight))  # Use placeholders to avoid SQL injection
+        #conn.commit()
 
         # Close the connection
-        conn.close()
+        #conn.close()
 
         # Return a success message with the inserted data
         return jsonify({"message": "Robot added successfully", "data": data}), 201
@@ -157,7 +185,7 @@ def update_robots(robot_id):
         data = request.get_json()
 
         # Define required fields
-        required_fields = ['id', 'position', 'energy', 'numb_packages', 'package_list', 'status', 'dest', 'speed']
+        required_fields = ['id', 'position', 'energy', 'numb_packages', 'package_list', 'status', 'dest', 'speed', 'weight']
 
         # Check if all the required fields are present in the request
         missing_fields = [field for field in required_fields if field not in data]
