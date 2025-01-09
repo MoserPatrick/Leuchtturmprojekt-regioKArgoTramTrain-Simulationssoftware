@@ -2,6 +2,7 @@ from Robot import Robot
 from package import Package
 from create_package import package_creator
 import requests
+import json
 
 
 class Simulation:
@@ -34,7 +35,22 @@ class Simulation:
         url = "http://127.0.0.1:5000/robots"
         
 
-        for i in range(numb_robots):
+        # HELPING CODE
+        # example for getting Robot from Database
+        robot_id = 2
+        url_get_robot = f"http://127.0.0.1:5000/robot/{robot_id}"
+        response = requests.get(url_get_robot)
+        if response.status_code != 200:
+            print(f"Error: Received status code {response.status_code}")
+        else:
+            obj_robot = json.loads(response.text)
+            robot = Robot.from_dict(obj_robot)
+            robot.charge()
+
+
+
+
+        '''for i in range(numb_robots):
             # Create package_list
             package_list = []    
             # creating packages 
@@ -52,7 +68,8 @@ class Simulation:
                 print(f"Error: Received status code {response.status_code}")
                 print("Message:", response.text)
 
-            robots.append(robot)
+            robots.append(robot)'''
+
 
         #robot.charge()
 

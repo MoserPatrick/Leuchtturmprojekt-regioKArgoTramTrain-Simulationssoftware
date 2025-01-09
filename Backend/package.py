@@ -8,7 +8,7 @@ class Package:
         self.length = length
         self.destination = destination
     
-    def to_dict(self):
+    def to_dict_p(self):
         # Convert Package object to a dictionary
         return {
             "weight": self.weight,
@@ -17,4 +17,13 @@ class Package:
             "length": self.length,
             "destination": self.destination
         }
-        
+    
+    @classmethod
+    def from_dict(cls, data):
+        return cls(
+            weight=data['weight'],
+            width = data['width'],
+            height = data['height'],
+            length = data['length'],
+            destination = data['destination']
+            )

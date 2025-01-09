@@ -4,6 +4,7 @@ import time
 from package import Package
 import sqlite3
 import json
+import requests
 
 
 class Robot:
@@ -22,6 +23,22 @@ class Robot:
         self.dest = dest
         self.speed = speed
         self.weight = weight
+    
+    @classmethod
+    def from_dict(cls, data):
+        # Recreate Robot from a dictionary
+        packages = [Package.from_dict(pkg) for pkg in data['package_list']]
+        return cls(
+            id=data['id'],
+            position=data['position'],
+            energy=data['energy'],
+            numb_packages=data['numb_packages'],
+            package_list = packages,
+            status = data['status'],
+            dest = data['dest'],
+            speed = data['speed'],
+            weight = data['weight']
+        )
         
      
 #Methods
@@ -32,12 +49,13 @@ class Robot:
             "position": self.position,
             "energy": self.energy,
             "numb_packages": self.numb_packages,
-            "package_list": [package.to_dict() for package in self.package_list],  # Serialize the list of objects,
+            "package_list": [package.to_dict_p() for package in self.package_list],  # Serialize the list of objects,
             "status": self.status,
             "dest": self.dest,
             "speed": self.speed,
             "weight": self.weight
         }
+    
     
     # Serialize package_list to a JSON string
     def insert_robot(robot):
@@ -45,7 +63,7 @@ class Robot:
         cursor = conn.cursor()
 
         # Serialize package_list to a JSON string
-        package_list_json = json.dumps([package.to_dict() for package in robot.package_list])
+        package_list_json = json.dumps([package.to_dict_p() for package in robot.package_list])
 
         # Insert robot into the database (assuming you have a `robots` table)
         cursor.execute('''
@@ -57,15 +75,28 @@ class Robot:
         #TODO add homepath
         pass
     def charge(self):
-        print("start")
-        speed = 1 # simulation speed
-        # Test Value energy = 95
+        print("Charging for ", self.energy)
+        url_get_config = "http://127.0.0.1:5000/config"
+        response = requests.get(url_get_config)
+        json_response = json.loads(response.text)
+        capacity = json_response['capacity']
+        sim_speed = json_response['sim_speed']
+
         # Charging 1% at a time (for visuals)
-        for energy in range(energy, 101):
+        '''for energy in range(energy, 101):
             print(energy)
-            time.sleep(1 * speed)
+            time.sleep(1 * speed)'''
         # Charging everything at once but take the given time
-        # time.sleep((100 - energy) * speed)
+        if(self.energy > capacity):
+            self.energy = capacity
+        time.sleep((capacity - self.energy) * sim_speed)
+        #self.energy = capacity
+        self.energy = 1000.0
+        url_patch_robot = f"http://127.0.0.1:5000/robot/{self.id}"
+        json_robot = self.to_dict()
+        print("enery", json_robot['energy'])
+        response = requests.patch(url_patch_robot, json=json_robot)
+
         pass
     def waitForNextTram():
         time = 12435 # simulation  time in seconds

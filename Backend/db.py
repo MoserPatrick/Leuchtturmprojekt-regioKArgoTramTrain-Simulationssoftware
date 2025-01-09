@@ -21,7 +21,7 @@ command2 = """
 CREATE TABLE IF NOT EXISTS robots (
     id INT,
     position TEXT,
-    Energy REAL,
+    energy REAL,
     numb_packages INT,
     package_list TEXT,
     status TEXT,

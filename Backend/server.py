@@ -25,12 +25,30 @@ def fetch_data_from_db(query, params=()):
 
     return rows
 
+
+def fetch_one(query, params=()):
+     # Connect to the SQLite database
+    conn = sqlite3.connect('simulation.db')
+    cursor = conn.cursor()
+
+    # Execute the query with optional parameters
+    cursor.execute(query, params)
+
+    # Fetch all rows from the query result
+    rows = cursor.fetchone()
+
+    # Close the connection
+    conn.close()
+
+    return rows
+
+
 def insert_robot(robot):
     conn = sqlite3.connect('simulation.db')
     cursor = conn.cursor()
 
     # Serialize the package_list to a JSON string
-    package_list_json = json.dumps([package.to_dict() for package in robot.package_list])
+    package_list_json = json.dumps([package.to_dict_p() for package in robot.package_list])
     
     # Insert robot into the database
     cursor.execute('''
@@ -39,6 +57,7 @@ def insert_robot(robot):
         ''', (robot.id, robot.position, robot.energy, robot.numb_packages, package_list_json, robot.status, robot.dest, robot.speed, robot.weight))  # Use placeholders to avoid SQL injection
     conn.commit()
     conn.close()
+
 
 @app.route('/config', methods=['GET'])
 def get_config():
@@ -61,6 +80,7 @@ def get_config():
 
     # Return the data as JSON
     return jsonify(config)
+
 
 @app.route('/robots', methods=['GET'])
 def get_robots():
@@ -88,6 +108,36 @@ def get_robots():
 
         # Return the data as JSON
         return jsonify(robots)
+    
+
+@app.route('/robot/<robot_id>', methods=['GET'])
+def get_robot(robot_id):
+    print("robto giving works")
+    query = 'SELECT * FROM robots WHERE id = ?'
+
+    # fetch data from database
+    print(fetch_one(query, (robot_id,)))
+    data = fetch_one(query, (robot_id,))
+    if data is None:
+        return jsonify({'error': 'Robot not found'}), 404
+    # Prepare the data in a list of dictionaries to return as JSON
+    
+    robot = {
+        'id': data[0],
+        'position': data[1],
+        'energy': data[2],
+        'numb_packages': data[3],
+        'package_list': json.loads(data[4]) if data[4] else [],
+        'status': data[5],
+        'dest': data[6],
+        'speed': data[7],
+        'weight': data[8]
+    }
+    print(robot)
+    robot_json = json.dumps(robot)
+    print("string", robot_json)
+    # Return the data as JSON
+    return robot_json
 
 
 @app.route('/config', methods=['POST'])
@@ -161,42 +211,41 @@ def add_robots():
         # Call the insert_robot function to insert the robot into the database
         insert_robot(robot)
 
-        # Insert data into the SQLite database
-        #conn = sqlite3.connect('simulation.db')
-        #cursor = conn.cursor()
-        #cursor.execute('''
-        #    INSERT INTO robots (id, position, energy, numb_packages, package_list, status, dest, speed, weight)
-        #    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-        #''', (id, position, energy, numb_packages, package_list, status, dest, speed, weight))  # Use placeholders to avoid SQL injection
-        #conn.commit()
-
-        # Close the connection
-        #conn.close()
-
         # Return a success message with the inserted data
         return jsonify({"message": "Robot added successfully", "data": data}), 201
     else:
         return jsonify({"error": "Request must be in JSON format"}), 400
 
 
-@app.route('/robots/<robot_id>', methods=['PATCH'])
+@app.route('/robot/<robot_id>', methods=['PATCH'])
 def update_robots(robot_id):
+    print("Updating the Robot with the ID: ", robot_id)
     # Check if the incoming request contains JSON
     if request.is_json:
         # Get the JSON data from the request
         data = request.get_json()
 
-        # Define required fields
-        required_fields = ['id', 'position', 'energy', 'numb_packages', 'package_list', 'status', 'dest', 'speed', 'weight']
+        # Extract individual fields from the JSON data
+        id = data.get('id')
+        position = data.get('position')
+        energy = data.get('energy')
+        numb_packages = data.get('numb_packages')
+        package_list = data.get('package_list')
+        status = data.get('status')
+        dest = data.get('dest')
+        speed = data.get('speed')
+        weight = data.get('weight')
 
-        # Check if all the required fields are present in the request
-        missing_fields = [field for field in required_fields if field not in data]
+        # Validate that required fields are provided
+        required_fields = ['id', 'position', 'energy', 'numb_packages', 'package_list', 'status', 'dest', 'speed', 'weight']
+        missing_fields = [field for field in required_fields if not data.get(field)]
         if missing_fields:
             return jsonify({"error": f"Missing required fields: {', '.join(missing_fields)}"}), 400
-
-        # Establish database connection
-        conn = sqlite3.connect('simulation.db')
-        cursor = conn.cursor()
+        # Convert the 'package_list' (which is a list of dictionaries) to Package objects
+        package_list = [Package(p['weight'], p['width'], p['height'], p['length'], p['destination'],) for p in data['package_list']]
+        # Serialize the package_list to a JSON string
+        package_list_json = json.dumps([package.to_dict_p() for package in package_list])
+        data["package_list"] = package_list_json
 
         # Build the update query based on the provided data
         updates = []
@@ -212,16 +261,16 @@ def update_robots(robot_id):
         updates_query = ', '.join(updates)
         parameters.append(robot_id)
 
-        # Execute the update query
-        cursor.execute(f'UPDATE robots SET {updates_query} WHERE id = ?', parameters)
+        conn = sqlite3.connect('simulation.db')
+        cursor = conn.cursor()
+
+        # Insert robot into the database
+        cursor.execute(f'UPDATE robots SET {updates_query} WHERE id = ?', parameters)  # Use placeholders to avoid SQL injection
         conn.commit()
-
-        # Check if any rows were updated
-        if cursor.rowcount == 0:
-            return jsonify({"error": "Robot not found"}), 404
-
-        # Close the database connection
         conn.close()
+
+        #update_robot(robot,updates_query, parameters)
+        # Execute the update query
 
         # Return the updated product data
         return jsonify({
