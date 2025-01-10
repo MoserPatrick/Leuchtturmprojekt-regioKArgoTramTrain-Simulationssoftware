@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_97734fe22547b649a55d4722731d1554 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_97734fe22547b649a55d4722731d1554" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_97734fe22547b649a55d4722731d1554 = L.map(
+                "map_97734fe22547b649a55d4722731d1554",
+                {
+                    center: [49.0069, 8.4037],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 13,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_577ab9df52a3dc9939d07afd559577b8 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_577ab9df52a3dc9939d07afd559577b8.addTo(map_97734fe22547b649a55d4722731d1554);
+        
+    
+            var marker_23b60a35e55fa5ec1a43b7235de32f8e = L.marker(
+                [48.9937, 8.401],
+                {
+}
+            ).addTo(map_97734fe22547b649a55d4722731d1554);
+        
+    
+            var icon_98cde4a3e060c465f7a26d5306323711 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+            marker_23b60a35e55fa5ec1a43b7235de32f8e.setIcon(icon_98cde4a3e060c465f7a26d5306323711);
+        
+    
+        var popup_8609d638b40e0ee9c89e7b87e513705e = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_975eb0a58c4624147f2721989209fbcc = $(`<div id="html_975eb0a58c4624147f2721989209fbcc" style="width: 100.0%; height: 100.0%;">Karlsruhe Hauptbahnhof</div>`)[0];
+                popup_8609d638b40e0ee9c89e7b87e513705e.setContent(html_975eb0a58c4624147f2721989209fbcc);
+            
+        
+
+        marker_23b60a35e55fa5ec1a43b7235de32f8e.bindPopup(popup_8609d638b40e0ee9c89e7b87e513705e)
+        ;
+
+        
+    
+    
+            var marker_663e2ba23d67a3b8a219628fff50594e = L.marker(
+                [49.0097, 8.4044],
+                {
+}
+            ).addTo(map_97734fe22547b649a55d4722731d1554);
+        
+    
+            var icon_bb6f8963f8234c289b72011880dbbe74 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+            marker_663e2ba23d67a3b8a219628fff50594e.setIcon(icon_bb6f8963f8234c289b72011880dbbe74);
+        
+    
+        var popup_9bc1cc7308841df9ec8d9693f2bd5318 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_aad346bc184265796e8ac9a919eb6b48 = $(`<div id="html_aad346bc184265796e8ac9a919eb6b48" style="width: 100.0%; height: 100.0%;">Marktplatz</div>`)[0];
+                popup_9bc1cc7308841df9ec8d9693f2bd5318.setContent(html_aad346bc184265796e8ac9a919eb6b48);
+            
+        
+
+        marker_663e2ba23d67a3b8a219628fff50594e.bindPopup(popup_9bc1cc7308841df9ec8d9693f2bd5318)
+        ;
+
+        
+    
+    
+            var marker_296db2e73c941ce76f4f618a0108dba0 = L.marker(
+                [48.9992, 8.4655],
+                {
+}
+            ).addTo(map_97734fe22547b649a55d4722731d1554);
+        
+    
+            var icon_e642d00645ff73fb07e5db689867a579 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+            marker_296db2e73c941ce76f4f618a0108dba0.setIcon(icon_e642d00645ff73fb07e5db689867a579);
+        
+    
+        var popup_aa47611b7a33235874572e23244224e2 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_50b24923233fd340a4dfa5ba65c6808b = $(`<div id="html_50b24923233fd340a4dfa5ba65c6808b" style="width: 100.0%; height: 100.0%;">Durlach Bahnhof</div>`)[0];
+                popup_aa47611b7a33235874572e23244224e2.setContent(html_50b24923233fd340a4dfa5ba65c6808b);
+            
+        
+
+        marker_296db2e73c941ce76f4f618a0108dba0.bindPopup(popup_aa47611b7a33235874572e23244224e2)
+        ;
+
+        
+    
+    
+            var marker_157c0a5ccb4adb03b25431da3f239f3a = L.marker(
+                [49.0092, 8.3923],
+                {
+}
+            ).addTo(map_97734fe22547b649a55d4722731d1554);
+        
+    
+            var icon_22f22d17b4eb9fe5b6c0094f4a2d23e5 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+            marker_157c0a5ccb4adb03b25431da3f239f3a.setIcon(icon_22f22d17b4eb9fe5b6c0094f4a2d23e5);
+        
+    
+        var popup_451d170263f3ce2beec521fa3520625d = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_1cacbb72324a8258fc36b6b14065999b = $(`<div id="html_1cacbb72324a8258fc36b6b14065999b" style="width: 100.0%; height: 100.0%;">Europaplatz</div>`)[0];
+                popup_451d170263f3ce2beec521fa3520625d.setContent(html_1cacbb72324a8258fc36b6b14065999b);
+            
+        
+
+        marker_157c0a5ccb4adb03b25431da3f239f3a.bindPopup(popup_451d170263f3ce2beec521fa3520625d)
+        ;
+
+        
+    
+</script>
+</html>
