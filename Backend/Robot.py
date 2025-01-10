@@ -84,6 +84,7 @@ class Robot:
 
 
     def waitForNextTram(self):
+        # TODO
         time = 12435 # simulation  time in seconds
         arrival_time = 12439 # arrival time of the Tram
         self.status = "Waiting"
@@ -105,7 +106,7 @@ class Robot:
         pass
 
 
-    def deliverPackage(self):
+    def delieverPackage(self):
         deliver_time = 10
         url_patch_robot = f"http://127.0.0.1:5000/robot/{self.id}"
         self.status = "Delivering"

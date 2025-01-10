@@ -8,6 +8,7 @@ from Robot import Robot
 app = Flask(__name__)
 CORS(app, origins=["http://127.0.0.1:5500"])
 CORS(app, origins=["http://127.0.0.1:5000"])
+
 # helper Functions
 def fetch_data_from_db(query, params=()):
      # Connect to the SQLite database
@@ -58,6 +59,29 @@ def insert_robot(robot):
     conn.commit()
     conn.close()
 
+def create_robot(data):
+    # Extract individual fields from the JSON data
+        id = data.get('id')
+        position = data.get('position')
+        energy = data.get('energy')
+        numb_packages = data.get('numb_packages')
+        package_list = data.get('package_list')
+        status = data.get('status')
+        dest = data.get('dest')
+        speed = data.get('speed')
+        weight = data.get('weight')
+
+        # Validate that required fields are provided
+        required_fields = ['id', 'position', 'energy', 'numb_packages', 'package_list', 'status', 'dest', 'speed', 'weight']
+        missing_fields = [field for field in required_fields if not data.get(field)]
+        if missing_fields:
+            return jsonify({"error": f"Missing required fields: {', '.join(missing_fields)}"}), 400
+        # Convert the 'package_list' (which is a list of dictionaries) to Package objects
+        package_list = [Package(p['weight'], p['width'], p['height'], p['length'], p['destination'],) for p in data['package_list']]
+
+        # Create the Robot object
+        return Robot(id=id, position=position, energy=energy, numb_packages=numb_packages, package_list=package_list, status=status, dest=dest, speed=speed, weight=weight)
+        
 
 @app.route('/config', methods=['GET'])
 def get_config():
@@ -96,7 +120,7 @@ def get_robots():
         robot = {
             'id': row[0],
             'position': row[1],
-            'energy': row(2),
+            'energy': row[2],
             'numb_packages': row[3],
             'package_list': row[4],
             'status': row[5],
@@ -107,7 +131,7 @@ def get_robots():
         robots.append(robot)
 
         # Return the data as JSON
-        return jsonify(robots)
+    return jsonify(robots)
     
 
 @app.route('/robot/<robot_id>', methods=['GET'])
@@ -185,29 +209,8 @@ def add_robots():
     if request.is_json:
         # Get JSON data from the request
         data = request.get_json()
-
-        # Extract individual fields from the JSON data
-        id = data.get('id')
-        position = data.get('position')
-        energy = data.get('energy')
-        numb_packages = data.get('numb_packages')
-        package_list = data.get('package_list')
-        status = data.get('status')
-        dest = data.get('dest')
-        speed = data.get('speed')
-        weight = data.get('weight')
-
-        # Validate that required fields are provided
-        required_fields = ['id', 'position', 'energy', 'numb_packages', 'package_list', 'status', 'dest', 'speed', 'weight']
-        missing_fields = [field for field in required_fields if not data.get(field)]
-        if missing_fields:
-            return jsonify({"error": f"Missing required fields: {', '.join(missing_fields)}"}), 400
-        # Convert the 'package_list' (which is a list of dictionaries) to Package objects
-        package_list = [Package(p['weight'], p['width'], p['height'], p['length'], p['destination'],) for p in data['package_list']]
-
-        # Create the Robot object
-        robot = Robot(id=id, position=position, energy=energy, numb_packages=numb_packages, package_list=package_list, status=status, dest=dest, speed=speed, weight=weight)
-
+        robot = create_robot(data)
+       
         # Call the insert_robot function to insert the robot into the database
         insert_robot(robot)
 
@@ -284,6 +287,7 @@ def update_robots(robot_id):
 
 @app.route('/config', methods=['PATCH'])
 def update_config():
+
     # Check if the incoming request contains JSON
     if request.is_json:
         # Get the JSON data from the request
@@ -334,6 +338,41 @@ def update_config():
 
     else:
         return jsonify({"error": "Request must be in JSON format"}), 400
+
+
+# Robot Methods
+
+@app.route('/robot/charge', methods=['POST'])
+def charge_robot():
+    if request.is_json:
+        # Get JSON data from the request
+        data = request.get_json()
+        robot = create_robot(data)
+        robot.charge()
+
+@app.route('/robot/wait', methods=['POST'])
+def wait_robot():
+    if request.is_json:
+        # Get JSON data from the request
+        data = request.get_json()
+        robot = create_robot(data)
+        robot.waitForNextTram()
+
+@app.route('/robot/deliever', methods=['POST'])
+def deliever_robot():
+    if request.is_json:
+        # Get JSON data from the request
+        data = request.get_json()
+        robot = create_robot(data)
+        robot.delieverPackage()
+
+@app.route('/robot/load', methods=['POST'])
+def load_robot():
+    if request.is_json:
+        # Get JSON data from the request
+        data = request.get_json()
+        robot = create_robot(data)
+        robot.loadPackage()
 
 
 if __name__ == '__main__':
