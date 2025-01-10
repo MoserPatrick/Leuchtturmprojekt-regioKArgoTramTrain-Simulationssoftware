@@ -57,23 +57,11 @@ class Robot:
         }
     
     
-    # Serialize package_list to a JSON string
-    def insert_robot(robot):
-        conn = sqlite3.connect('your_database.db')
-        cursor = conn.cursor()
-
-        # Serialize package_list to a JSON string
-        package_list_json = json.dumps([package.to_dict_p() for package in robot.package_list])
-
-        # Insert robot into the database (assuming you have a `robots` table)
-        cursor.execute('''
-            INSERT INTO robots (id, name, package_list) 
-            VALUES (?, ?, ?)
-        ''', (robot.id, robot.name, package_list_json))
-
     def returnHome():
         #TODO add homepath
         pass
+
+
     def charge(self):
         print("Charging for ", self.energy)
         url_get_config = "http://127.0.0.1:5000/config"
@@ -82,10 +70,6 @@ class Robot:
         capacity = json_response['capacity']
         sim_speed = json_response['sim_speed']
 
-        # Charging 1% at a time (for visuals)
-        '''for energy in range(energy, 101):
-            print(energy)
-            time.sleep(1 * speed)'''
         # Charging everything at once but take the given time
         if(self.energy > capacity):
             self.energy = capacity
@@ -95,21 +79,66 @@ class Robot:
         url_patch_robot = f"http://127.0.0.1:5000/robot/{self.id}"
         json_robot = self.to_dict()
         print("enery", json_robot['energy'])
-        response = requests.patch(url_patch_robot, json=json_robot)
-
+        requests.patch(url_patch_robot, json=json_robot)
         pass
-    def waitForNextTram():
+
+
+    def waitForNextTram(self):
         time = 12435 # simulation  time in seconds
         arrival_time = 12439 # arrival time of the Tram
+        self.status = "Waiting"
+        url_patch_robot = f"http://127.0.0.1:5000/robot/{self.id}"
+
+        json_robot = self.to_dict()
+        requests.patch(url_patch_robot, json=json_robot)
+
         time.sleep(arrival_time - time)
+
+        self.status = "Driving"
+        json_robot = self.to_dict()
+        requests.patch(url_patch_robot, json=json_robot)
         pass
+
+
     def findBestPath():
         # TODO add pathfinding
         pass
+
+
     def deliverPackage(self):
-        time.sleep(1)
+        deliver_time = 10
+        url_patch_robot = f"http://127.0.0.1:5000/robot/{self.id}"
+        self.status = "Delivering"
+
+        json_robot = self.to_dict()
+        requests.patch(url_patch_robot, json=json_robot)
+
+        time.sleep(deliver_time)
         del self.package_list[0]
+        if (self.package_list[0]):
+            self.findBestPath
+        else:
+            self.returnHome
+        self.status = "Driving"
+
+        json_robot = self.to_dict()
+        requests.patch(url_patch_robot, json=json_robot)
         pass
+
+
     def loadPackage(self):
+        loading_time = 10
+        url_patch_robot = f"http://127.0.0.1:5000/robot/{self.id}"
+        self.status = "Loading"
+
+        json_robot = self.to_dict()
+        requests.patch(url_patch_robot, json=json_robot)
+
+        time.sleep(loading_time)
         self.package_list = package_creator.create_package(self.numb_packages, self.package_list)
+        self.findBestPath()
+        self.status = "Driving"
+
+        json_robot = self.to_dict()
+        requests.patch(url_patch_robot, json=json_robot)
         pass

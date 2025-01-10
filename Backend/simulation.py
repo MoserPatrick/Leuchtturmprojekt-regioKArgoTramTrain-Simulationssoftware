@@ -9,25 +9,28 @@ class Simulation:
 
     def main():
 
+        url_get_config = f"http://127.0.0.1:5000/config"
+        response_config = requests.get(url_get_config)
+        config = json.loads(response_config.text)
+        
         # Create Robots
         # Configurated Data 
-        numb_robots = 3 # LOAD: load the config data
-        max_packages = 3 # LOAD: load the config number of Packages
-        battery = 3
-        capacity = 3
-        sim_speed = 1.0
-        usage = 1
+        numb_robots = config['numb_robots'] # LOAD: load the config data
+        max_packages = config['max_packages'] # LOAD: load the config number of Packages
+        battery = config['battery']
+        capacity = config['capacity']
+        sim_speed = config['sim_speed']
+        usage = config['usage']
 
         # Robot Data
-        id = 1
         pos = "(100, 50)" # LOAD: load the real starting Position (Station)
-        energy = 100 # LOAD: from config
-        numb_packages =1
-        package_list = 1
+        energy = battery # LOAD: from config
+        numb_packages = max_packages
+        package_list = []
         status = "idle"
-        dest = "None"
-        speed = 1
-        weight = 100.0 # LOAD: load form config
+        dest = "Station"
+        weight = 80.0 # LOAD: load form config
+        speed = 2 - (weight/100)
 
         # Arrays
         stations = [] # LOAD: List of all Stations
