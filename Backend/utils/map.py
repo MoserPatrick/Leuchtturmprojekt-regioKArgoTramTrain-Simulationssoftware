@@ -22,6 +22,6 @@ for haltestelle in haltestellen:
         icon=folium.Icon(color="blue", icon="info-sign"),
     ).add_to(karte)
 
-# erstellt Karte als HTML-Datei (vorerst bis Karte in die Simulation gepackt wurde)
+# erstellt Karte als HTML-Datei (wir rufen die html-Datei in der Simulation auf)
 karte.save("karlsruhe_bahnnetz.html")
 
