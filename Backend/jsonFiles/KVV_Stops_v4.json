@@ -246,7 +246,7 @@
     "name": "Groetzingen",
     "triasID": "de:08212:1521",
     "triasName": "Groetzingen",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "49.0062797301156",
       "long": "8.49225947103526"
     }
@@ -1074,7 +1074,7 @@
     "name": "KA-Knielingen",
     "triasID": "de:08212:32586",
     "triasName": "Karlsruhe-Knielingen",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "49.0266585303828",
       "long": "8.34119877285772"
     }
@@ -1164,7 +1164,7 @@
     "name": "KA-Muehlburg",
     "triasID": "de:08212:32587",
     "triasName": "Karlsruhe-Muehlburg",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "49.0145701186306",
       "long": "8.3511161735944"
     }
@@ -1173,7 +1173,7 @@
     "name": "Neureut Adolf-Ehrmann-Bad",
     "triasID": "de:08212:1114",
     "triasName": "Neureut Adolf-Ehrmann-Bad",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "49.050608709503",
       "long": "8.38482096305457"
     }
@@ -1218,7 +1218,7 @@
     "name": "Albert-Braun-Str.",
     "triasID": "de:08212:608",
     "triasName": "Oberreut Albert-Braun-Strasse",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "48.9891289173621",
       "long": "8.36354885712662"
     }
@@ -1281,7 +1281,7 @@
     "name": "Rueppurr Battstr.",
     "triasID": "de:08212:1210",
     "triasName": "Rueppurr Battstrasse",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "48.9652494002708",
       "long": "8.40480847812623"
     }
@@ -1380,7 +1380,7 @@
     "name": "Bauerbach",
     "triasID": "de:08215:32617",
     "triasName": "Bauerbach (Baden)",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "49.0738941560858",
       "long": "8.74818949548091"
     }
@@ -1389,7 +1389,7 @@
     "name": "Bretten",
     "triasID": "de:08215:1551",
     "triasName": "Bretten",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "49.0371775360149",
       "long": "8.69327548216269"
     }
@@ -1443,7 +1443,7 @@
     "name": "Diedelsheim",
     "triasID": "de:08215:1838",
     "triasName": "Diedelsheim",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "49.0393093366255",
       "long": "8.67449170957175"
     }
@@ -1452,7 +1452,7 @@
     "name": "Duerrenbuechig",
     "triasID": "de:08215:1548",
     "triasName": "Duerrenbuechig",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "49.0238958919971",
       "long": "8.64787462770329"
     }
@@ -1461,7 +1461,7 @@
     "name": "Goelshausen",
     "triasID": "de:08215:1557",
     "triasName": "Goelshausen",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "49.0448798538223",
       "long": "8.72472550025971"
     }
@@ -1479,7 +1479,7 @@
     "name": "Bretten-Rinklingen",
     "triasID": "de:08215:1550",
     "triasName": "Bretten-Rinklingen",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "49.0366887401259",
       "long": "8.67368322581604"
     }
@@ -1488,7 +1488,7 @@
     "name": "Bretten-Ruit",
     "triasID": "de:08215:35081",
     "triasName": "Bretten-Ruit",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "49.0094086743179",
       "long": "8.72207547017156"
     }
@@ -1497,7 +1497,7 @@
     "name": "Bruchsal",
     "triasID": "de:08215:1856",
     "triasName": "Bruchsal",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "49.1249238384356",
       "long": "8.59034651690827"
     }
@@ -1578,7 +1578,7 @@
     "name": "Heidelsheim",
     "triasID": "de:08215:1834",
     "triasName": "Heidelsheim",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "49.1014976358487",
       "long": "8.64935684792208"
     }
@@ -1595,7 +1595,7 @@
     "name": "Helmsheim",
     "triasID": "de:08215:1835",
     "triasName": "Helmsheim",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "49.0856798717331",
       "long": "8.65140500676988"
     }
@@ -1604,7 +1604,7 @@
     "name": "Untergrombach",
     "triasID": "de:08215:1854",
     "triasName": "Untergrombach",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "49.0874154248295",
       "long": "8.54807179963761"
     }
@@ -1613,7 +1613,7 @@
     "name": "Bruchhausen",
     "triasID": "de:08215:1841",
     "triasName": "Bruchhausen (b. Ettlingen)",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "48.9240023072994",
       "long": "8.37394236496388"
     }
@@ -1685,7 +1685,7 @@
     "name": "Gondelsheim (Baden)",
     "triasID": "de:08215:1837",
     "triasName": "Gondelsheim (Baden)",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "49.0599512747388",
       "long": "8.66012764817868"
     }
@@ -1703,7 +1703,7 @@
     "name": "Malsch",
     "triasID": "de:08215:8306",
     "triasName": "Malsch (Kr Karlsruhe)",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "48.8894550370574",
       "long": "8.32337619762079"
     }
@@ -1721,7 +1721,7 @@
     "name": "Frauenalb-Schielberg",
     "triasID": "de:08215:1304",
     "triasName": "Frauenalb - Schielberg",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "48.837261189132",
       "long": "8.44048956121145"
     }
@@ -1730,7 +1730,7 @@
     "name": "Marxzell",
     "triasID": "de:08215:1303",
     "triasName": "Marxzell",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "48.863359007584",
       "long": "8.44731675737076"
     }
@@ -1739,7 +1739,7 @@
     "name": "Flehingen",
     "triasID": "de:08215:32092",
     "triasName": "Flehingen",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "49.0847208790877",
       "long": "8.78352921875817"
     }
@@ -1757,7 +1757,7 @@
     "name": "Odenheim",
     "triasID": "de:08215:31008",
     "triasName": "Odenheim",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "49.1789958438832",
       "long": "8.7464647301354"
     }
@@ -1775,7 +1775,7 @@
     "name": "Huttenheim",
     "triasID": "de:08215:32590",
     "triasName": "Huttenheim Bahnhof",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "49.1972082723344",
       "long": "8.47256840000736"
     }
@@ -1793,7 +1793,7 @@
     "name": "Rheinsheim",
     "triasID": "de:08215:32588",
     "triasName": "Rheinsheim Bahnhof",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "49.2291078893033",
       "long": "8.41561521099418"
     }
@@ -1802,7 +1802,7 @@
     "name": "Sulzfeld (Baden)",
     "triasID": "de:08215:32093",
     "triasName": "Sulzfeld (Baden)",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "49.108184404563",
       "long": "8.85258271464844"
     }
@@ -1811,7 +1811,7 @@
     "name": "Stettfeld (Baden)",
     "triasID": "de:08215:31004",
     "triasName": "Stettfeld (Baden)",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "49.178972354799",
       "long": "8.64385017523043"
     }
@@ -1864,7 +1864,7 @@
     "name": "Zeutern",
     "triasID": "de:08215:31005",
     "triasName": "Zeutern",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "49.1781619745672",
       "long": "8.67760886360764"
     }
@@ -1891,7 +1891,7 @@
     "name": "Joehlingen",
     "triasID": "de:08215:1531",
     "triasName": "Joehlingen",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "49.028213551476",
       "long": "8.57514702230097"
     }
@@ -1909,7 +1909,7 @@
     "name": "Woessingen",
     "triasID": "de:08215:1541",
     "triasName": "Woessingen",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "49.0155304653168",
       "long": "8.60453091524452"
     }
@@ -1927,7 +1927,7 @@
     "name": "Weingarten (Baden)",
     "triasID": "de:08215:1853",
     "triasName": "Weingarten (Baden)",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "49.0590212177733",
       "long": "8.5210953916555"
     }
@@ -1936,7 +1936,7 @@
     "name": "Zaisenhausen",
     "triasID": "de:08215:32618",
     "triasName": "Zaisenhausen",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "49.1047499762766",
       "long": "8.81665010328366"
     }
@@ -1945,7 +1945,7 @@
     "name": "Fischweier",
     "triasID": "de:08215:1302",
     "triasName": "Fischweier",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "48.8882323666578",
       "long": "8.45130527723225"
     }
@@ -1954,7 +1954,7 @@
     "name": "Ittersbach",
     "triasID": "de:08215:1409",
     "triasName": "Ittersbach",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "48.8692328352251",
       "long": "8.51109714254325"
     }
@@ -1981,7 +1981,7 @@
     "name": "Langensteinbach",
     "triasID": "de:08215:1403",
     "triasName": "Langensteinbach",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "48.9152186656155",
       "long": "8.50312010282027"
     }
@@ -2008,7 +2008,7 @@
     "name": "Spielberg",
     "triasID": "de:08215:1406",
     "triasName": "Spielberg (Baden)",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "48.8974932027779",
       "long": "8.4746704577722"
     }
@@ -2017,7 +2017,7 @@
     "name": "Bahnbruecken",
     "triasID": "de:08215:32008",
     "triasName": "Bahnbruecken",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "49.1192858613469",
       "long": "8.76482629454281"
     }
@@ -2026,7 +2026,7 @@
     "name": "Gochsheim (Baden)",
     "triasID": "de:08215:32007",
     "triasName": "Gochsheim (Baden)",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "49.1095251784847",
       "long": "8.74434470606488"
     }
@@ -2035,7 +2035,7 @@
     "name": "Menzingen (Baden)",
     "triasID": "de:08215:32009",
     "triasName": "Menzingen (Baden)",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "49.1362625205427",
       "long": "8.77519285292155"
     }
@@ -2044,7 +2044,7 @@
     "name": "Muenzesheim",
     "triasID": "de:08215:32005",
     "triasName": "Muenzesheim",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "49.1259702328972",
       "long": "8.71615557244921"
     }
@@ -2062,7 +2062,7 @@
     "name": "Oberoewisheim",
     "triasID": "de:08215:32004",
     "triasName": "Oberoewisheim",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "49.1401355351367",
       "long": "8.68626862294655"
     }
@@ -2071,7 +2071,7 @@
     "name": "Unteroewisheim",
     "triasID": "de:08215:32003",
     "triasName": "Unteroewisheim",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "49.1463587592569",
       "long": "8.66890418850452"
     }
@@ -2107,7 +2107,7 @@
     "name": "Bad Schoenborn Sued",
     "triasID": "de:08215:1862",
     "triasName": "Bad Schoenborn Sued",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "49.199996495273",
       "long": "8.64211642673208"
     }
@@ -2116,7 +2116,7 @@
     "name": "Bad Schoenborn-Kronau",
     "triasID": "de:08215:1863",
     "triasName": "Bad Schoenborn-Kronau",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "49.2195624619445",
       "long": "8.6470930934061"
     }
@@ -2125,7 +2125,7 @@
     "name": "Berghausen (Baden)",
     "triasID": "de:08215:2008",
     "triasName": "Berghausen (Baden)",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "49.0057493811027",
       "long": "8.53048278637455"
     }
@@ -2161,7 +2161,7 @@
     "name": "Kleinsteinbach",
     "triasID": "de:08215:1619",
     "triasName": "Kleinsteinbach",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "48.9666235196685",
       "long": "8.55497086101964"
     }
@@ -2170,7 +2170,7 @@
     "name": "Soellingen (b. KA)",
     "triasID": "de:08215:1617",
     "triasName": "Soellingen (b. Karlsruhe)",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "48.9879027912031",
       "long": "8.54344547592439"
     }
@@ -2197,7 +2197,7 @@
     "name": "KIT-Campus Nord",
     "triasID": "de:08215:1140",
     "triasName": "KIT-Campus Nord",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "49.0970686993748",
       "long": "8.43032961534806"
     }
@@ -2206,7 +2206,7 @@
     "name": "Eggenstein",
     "triasID": "de:08215:1120",
     "triasName": "Eggenstein",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "49.0756948508025",
       "long": "8.39796331566123"
     }
@@ -2242,7 +2242,7 @@
     "name": "Leopoldshafen Frankfurter Str.",
     "triasID": "de:08215:1133",
     "triasName": "Leopoldshafen Frankfurter Strasse",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "49.1009624201647",
       "long": "8.40388321338358"
     }
@@ -2278,7 +2278,7 @@
     "name": "Hochstetten",
     "triasID": "de:08215:1157",
     "triasName": "Hochstetten",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "49.1336529136628",
       "long": "8.41545351424304"
     }
@@ -2305,7 +2305,7 @@
     "name": "Linkenheim Friedrichstr.",
     "triasID": "de:08215:1152",
     "triasName": "Linkenheim Friedrichstrasse",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "49.1196856556008",
       "long": "8.40934497031103"
     }
@@ -2341,7 +2341,7 @@
     "name": "Waghaeusel",
     "triasID": "de:08215:32509",
     "triasName": "Waghaeusel Bahnhof",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "49.2479527856497",
       "long": "8.50842016299657"
     }
@@ -2350,7 +2350,7 @@
     "name": "Wiesental",
     "triasID": "de:08215:32584",
     "triasName": "Wiesental Bahnhof",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "49.2257463726181",
       "long": "8.50243738320434"
     }
@@ -2359,7 +2359,7 @@
     "name": "Forchheim (b. KA)",
     "triasID": "de:08215:1818",
     "triasName": "Forchheim (b Karlsruhe)",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "48.9646065588828",
       "long": "8.33848586069968"
     }
@@ -2404,7 +2404,7 @@
     "name": "Moersch Am Hang",
     "triasID": "de:08215:1500",
     "triasName": "Moersch Am Hang",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "48.9565437985486",
       "long": "8.28547627578379"
     }
@@ -2467,7 +2467,7 @@
     "name": "Blankenloch",
     "triasID": "de:08215:32239",
     "triasName": "Blankenloch",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "49.0662905032027",
       "long": "8.46484288856393"
     }
@@ -2521,7 +2521,7 @@
     "name": "Buechig",
     "triasID": "de:08215:1902",
     "triasName": "Buechig",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "49.0479298303746",
       "long": "8.46106996437063"
     }
@@ -2530,7 +2530,7 @@
     "name": "Friedrichstal (Baden)",
     "triasID": "de:08215:33000",
     "triasName": "Friedrichstal (Baden)",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "49.1006271722358",
       "long": "8.47409553599036"
     }
@@ -2584,7 +2584,7 @@
     "name": "Busenbach",
     "triasID": "de:08215:1241",
     "triasName": "Busenbach",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "48.929302440459",
       "long": "8.45056865869927"
     }
@@ -2593,7 +2593,7 @@
     "name": "Etzenrot",
     "triasID": "de:08215:1301",
     "triasName": "Etzenrot",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "48.913931685156",
       "long": "8.45754856845688"
     }
@@ -2602,7 +2602,7 @@
     "name": "Reichenbach (b. Ettlingen)",
     "triasID": "de:08215:1402",
     "triasName": "Reichenbach (b. Ettlingen)",
-    "coordPostionWGS84": {
+    "coordPositionWGS84": {
       "lat": "48.9203839645891",
       "long": "8.4794674613894"
     }
