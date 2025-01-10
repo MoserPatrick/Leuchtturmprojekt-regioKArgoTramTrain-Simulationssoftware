@@ -33,9 +33,10 @@ async function getRobotsData() {
 }
 
 const url_charge_robot = `http://127.0.0.1:5000/robot/charge`
-async function chargeRobot(robot) {
+
+async function Robot_method(robot, url) {
     try {
-        const response = await fetch(url_charge_robot, {
+        const response = await fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -56,12 +57,10 @@ async function chargeRobot(robot) {
 }
 
 // Example usage
-chargeRobot(1);  // Call the method for robot with ID 1
+url_deliever_robot = `http://127.0.0.1:5000/robots/deliever`
+Robot_method(robotInstances[2], url_charge_robot);  // Call the method for robot with ID 1
+Robot_method(robotInstances[2], url_deliever_robot);
 
-
-
-// Example usage to fetch and store robot data in an array
-getRobotsData();
 
 /*
 fetch(url_get_robots)
