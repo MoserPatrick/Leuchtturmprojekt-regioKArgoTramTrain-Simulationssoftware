@@ -1,9 +1,7 @@
 
-const url_get_robots = `http://127.0.0.1:5000/robots`;
-
 async function getRobotsData() {
     try {
-        const response = await fetch(url_get_robots);  // Fetch robots data from Flask server
+        const response = await fetch(`http://127.0.0.1:5000/robots`);  // Fetch robots data from Flask server
         const robotsData = await response.json();  // Parse the response as JSON
 
         if (response.ok) {
@@ -32,7 +30,20 @@ async function getRobotsData() {
     }
 }
 
-const url_charge_robot = `http://127.0.0.1:5000/robot/charge`
+async function get_config() {
+    try {
+        const response = await fetch(`http://127.0.0.1:5000/config`);  // Fetch robots data from Flask server
+        const config_data = await response.json();  // Parse the response as JSON
+
+        if (response.ok) {
+            console.log[config_data]
+        } else {
+            console.log("Error:", config_data.error);  // Handle any errors
+        }
+    } catch (error) {
+        console.error("Error fetching config data:", error);  // Catch and log any errors
+    }
+}
 
 async function Robot_method(robot, url) {
     try {
@@ -57,7 +68,8 @@ async function Robot_method(robot, url) {
 }
 
 // Example usage
-url_deliever_robot = `http://127.0.0.1:5000/robots/deliever`
+const url_charge_robot = `http://127.0.0.1:5000/robot/charge`;
+const url_deliever_robot = `http://127.0.0.1:5000/robots/deliever`;
 Robot_method(robotInstances[2], url_charge_robot);  // Call the method for robot with ID 1
 Robot_method(robotInstances[2], url_deliever_robot);
 
