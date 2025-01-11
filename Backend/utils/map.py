@@ -1,12 +1,12 @@
 import folium
 
-#Koordinaten für Karlsruhe Map an sich
+# Koordinaten für Karlsruhe Map an sich
 karlsruhe_coords = [49.0069, 8.4037]
 
 # Karte erstellen
 karte = folium.Map(location=karlsruhe_coords, zoom_start=13)
 
-# Haltestellenfür Karlsruhe (nur Beispieldaten bisher -> mal schauen, ob wir einfach direkt alle Spots angeben können)
+# Haltestellen für Karlsruhe
 haltestellen = [
     {"name": "Karlsruhe Hauptbahnhof", "coords": [48.9937, 8.4010]},
     {"name": "Marktplatz", "coords": [49.0097, 8.4044]},
@@ -22,6 +22,20 @@ for haltestelle in haltestellen:
         icon=folium.Icon(color="blue", icon="info-sign"),
     ).add_to(karte)
 
-# erstellt Karte als HTML-Datei (wir rufen die html-Datei in der Simulation auf)
-karte.save("karlsruhe_bahnnetz.html")
+# Straßenbahnlinien (Verbindungen zwischen den Haltestellen)
+linien = [
+    {"name": "Linie 1", "path": [[48.9937, 8.4010], [49.0097, 8.4044], [49.0092, 8.3923]]},
+    {"name": "Linie 2", "path": [[48.9937, 8.4010], [48.9992, 8.4655]]},
+]
 
+# Linien auf der Karte einzeichnen
+for linie in linien:
+    folium.PolyLine(
+        locations=linie["path"],
+        color="red",
+        weight=5,
+        popup=linie["name"]
+    ).add_to(karte)
+
+# Karte als HTML speichern
+karte.save("karlsruhe_bahnnetz.html")

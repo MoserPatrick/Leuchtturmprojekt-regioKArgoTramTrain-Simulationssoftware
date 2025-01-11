@@ -9,6 +9,13 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="simulation.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <style>
+      #map {
+        height: 500px;
+        width: 100%; 
+      }
+    </style>
   </head>
   <body>
     <main>
@@ -16,15 +23,7 @@
         <div class="container-fluid">
           <div class="row">
             <div class="map-container info-container">
-              <div class="map">
-                <!-- Einbindung der interaktiven Folium-Karte -->
-                <iframe 
-                  src="karlsruhe_bahnnetz.html" 
-                  width="100%" 
-                  height="500px" 
-                  style="border:none;">
-                </iframe>
-              </div>
+              <div id="map"></div> <!-- Karte wird hier geladen -->
               <div class="roboter-info">
                 <div class="top-line">
                   <div class="left d-flex">
@@ -87,8 +86,34 @@
     </main>
     <!-- JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="simulation.js"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+     
+      const map = L.map('map').setView([49.0069, 8.4037], 13); // Karlsruhe coordinates
+
+      // Add a base map
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '© OpenStreetMap contributors'
+      }).addTo(map);
+
+      // Load GeoJSON file
+      fetch('KVV_Lines_GeoJSON_v3.json')
+        .then(response => response.json())
+        .then(data => {
+          // Add each tram line to the map with its color
+          data.features.forEach(feature => {
+            const color = feature.properties.colorCode || 'red'; // Default color if missing
+            L.geoJSON(feature, {
+              style: {
+                color: color,
+                weight: 4,
+                opacity: 0.8
+              }
+            }).addTo(map);
+          });
+        })
+        .catch(error => console.error("Error loading GeoJSON:", error));
+    </script>
   </body>
 </html>
-
-
