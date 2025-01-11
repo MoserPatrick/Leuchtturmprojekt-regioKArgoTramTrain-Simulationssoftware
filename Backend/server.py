@@ -6,8 +6,7 @@ from package import Package
 from Robot import Robot
 
 app = Flask(__name__)
-CORS(app, origins=["http://127.0.0.1:5500"])
-CORS(app, origins=["http://127.0.0.1:5000"])
+CORS(app)
 
 # helper Functions
 def fetch_data_from_db(query, params=()):

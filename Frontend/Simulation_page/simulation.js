@@ -1,5 +1,36 @@
-import { simulationTimer } from './simulationTimer.js';
+//import { simulationTimer } from './simulationTimer.js';
 
+
+// creating the right Robot list
+function create_robot_element(id) {
+    const image = 'images/Robot.png';
+    const listItem = document.createElement('li');
+    listItem.classList.add('single-roboter');
+    listItem.innerHTML = `${id}. <img src="${image}" />`;
+    return listItem;
+  }
+
+  // Get the parent div and add robots to the DOM
+// Wait until the DOM is fully loaded
+document.addEventListener('DOMContentLoaded', async function () {
+    // Get the parent div and add robots to the DOM
+    const roboterListDiv = document.getElementById('roboter-list');
+    console.log(roboterListDiv); // Check what it outputs
+    const robot_list = await getRobotsData();
+    console.log("robot_list:", robot_list);
+    
+    // Create the Robots in the List
+    robot_list.forEach(robot => {
+      console.log("Creating robot with ID:", robot.id);
+      robot = create_robot_element(robot.id)
+      console.log("robot"+robot)
+      roboterListDiv.appendChild(robot);
+    });
+  });
+
+
+
+/*
 const timer = new simulationTimer();
 const config = get_config()
   
@@ -14,7 +45,7 @@ const simulationInterval = setInterval(() => {
     console.log("Simulation complete.");
   }
 }, 1000 * config.speed); // Advance simulation every second
-
+*/
 
 async function reset_sim(){
     // reset Time
@@ -78,6 +109,7 @@ async function getRobotsData() {
                 robotInstances.push(robotInstance);  // Store robot object in the array
             });
             // How to get Attributes: RobotInsatnces[which one].attribute
+            return robotInstances;
         } else {
             console.log("Error:", robotsData.error);  // Handle any errors
         }
@@ -125,8 +157,8 @@ async function Robot_method(robot, url) {
 }
 
 // Example usage
-const url_charge_robot = `http://127.0.0.1:5000/robot/charge`;
-const url_deliever_robot = `http://127.0.0.1:5000/robots/deliever`;
+//const url_charge_robot = `http://127.0.0.1:5000/robot/charge`;
+//const url_deliever_robot = `http://127.0.0.1:5000/robots/deliever`;
 //reset_sim();
 //Robot_method(robotInstances[2], url_charge_robot);  // Call the method for robot with ID 1
 //Robot_method(robotInstances[2], url_deliever_robot);
