@@ -15,15 +15,11 @@ function create_robot_element(id) {
 document.addEventListener('DOMContentLoaded', async function () {
     // Get the parent div and add robots to the DOM
     const roboterListDiv = document.getElementById('roboter-list');
-    console.log(roboterListDiv); // Check what it outputs
     const robot_list = await getRobotsData();
-    console.log("robot_list:", robot_list);
     
     // Create the Robots in the List
     robot_list.forEach(robot => {
-      console.log("Creating robot with ID:", robot.id);
       robot = create_robot_element(robot.id)
-      console.log("robot"+robot)
       roboterListDiv.appendChild(robot);
     });
   });
