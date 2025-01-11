@@ -4,7 +4,7 @@ export class simulationTimer {
       this.currentTime = this.start_time; 
       this.endTime = 18 * 60; // End time in minutes (18:00 = 1080 minutes)
       this.timeStep = 1; // Time step in minutes per "tick"
-      this.running = False
+      this.running = false
     }
   
     // Advance the simulation time
@@ -22,11 +22,11 @@ export class simulationTimer {
     }
   
     stop(){
-      this.running = False
+      this.running = false
     }
 
     start(){
-      this.running = True
+      this.running = true
     }
 
     // Get the current simulation time in HH:MM format

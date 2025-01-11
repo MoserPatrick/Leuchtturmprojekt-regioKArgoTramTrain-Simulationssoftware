@@ -53,9 +53,9 @@ def insert_robot(robot):
     
     # Insert robot into the database
     cursor.execute('''
-            INSERT INTO robots (id, position, energy, numb_packages, package_list, status, dest, speed, weight)
+            INSERT INTO robots (id, position, energy, numb_packages, package_list, status, dest, speed, weight, start_pos)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ''', (robot.id, robot.position, robot.energy, robot.numb_packages, package_list_json, robot.status, robot.dest, robot.speed, robot.weight))  # Use placeholders to avoid SQL injection
+        ''', (robot.id, robot.position, robot.energy, robot.numb_packages, package_list_json, robot.status, robot.dest, robot.speed, robot.weight, robot.start_pos))  # Use placeholders to avoid SQL injection
     conn.commit()
     conn.close()
 
@@ -70,9 +70,10 @@ def create_robot(data):
         dest = data.get('dest')
         speed = data.get('speed')
         weight = data.get('weight')
+        start_pos = data.get('start_pos')
 
         # Validate that required fields are provided
-        required_fields = ['id', 'position', 'energy', 'numb_packages', 'package_list', 'status', 'dest', 'speed', 'weight']
+        required_fields = ['id', 'position', 'energy', 'numb_packages', 'package_list', 'status', 'dest', 'speed', 'weight', 'start_pos']
         missing_fields = [field for field in required_fields if not data.get(field)]
         if missing_fields:
             return jsonify({"error": f"Missing required fields: {', '.join(missing_fields)}"}), 400
@@ -80,7 +81,7 @@ def create_robot(data):
         package_list = [Package(p['weight'], p['width'], p['height'], p['length'], p['destination'],) for p in data['package_list']]
 
         # Create the Robot object
-        return Robot(id=id, position=position, energy=energy, numb_packages=numb_packages, package_list=package_list, status=status, dest=dest, speed=speed, weight=weight)
+        return Robot(id=id, position=position, energy=energy, numb_packages=numb_packages, package_list=package_list, status=status, dest=dest, speed=speed, weight=weight, start_pos=start_pos)
         
 
 @app.route('/config', methods=['GET'])
@@ -126,7 +127,8 @@ def get_robots():
             'status': row[5],
             'dest': row[6],
             'speed': row[7],
-            'weight': row[8]
+            'weight': row[8],
+            'start_pos': row[9]
         }
         robots.append(robot)
 
@@ -155,7 +157,8 @@ def get_robot(robot_id):
         'status': data[5],
         'dest': data[6],
         'speed': data[7],
-        'weight': data[8]
+        'weight': data[8],
+        'start_pos': data[9]
     }
     print(robot)
     robot_json = json.dumps(robot)
@@ -238,9 +241,10 @@ def update_robots(robot_id):
         dest = data.get('dest')
         speed = data.get('speed')
         weight = data.get('weight')
+        start_pos = data.get('start_pos')
 
         # Validate that required fields are provided
-        required_fields = ['id', 'position', 'energy', 'numb_packages', 'package_list', 'status', 'dest', 'speed', 'weight']
+        required_fields = ['id', 'position', 'energy', 'numb_packages', 'package_list', 'status', 'dest', 'speed', 'weight', 'start_pos']
         missing_fields = [field for field in required_fields if not data.get(field)]
         if missing_fields:
             return jsonify({"error": f"Missing required fields: {', '.join(missing_fields)}"}), 400
@@ -360,7 +364,7 @@ def config_delete():
         return jsonify({"message": "Error deleting data", "error": str(e)}), 500
 
 @app.route('/robots/delete', methods=['DELETE'])
-def config_delete():
+def robot_delete():
     try:
         # Establish connection to the SQLite database
         conn = sqlite3.connect('simulation.db')

@@ -21,12 +21,12 @@ async function reset_sim(){
     timer.stop()
     timer.reset()
     // delete database data
-    url_config_delete = `http://127.0.0.1:5000/config/delete`
-    url_robots_delete = `http://127.0.0.1:5000/robots/delete`
-    delete_config(url_config_delete)
-    delete_config(url_robots_delete)
+    const url_config_delete = `http://127.0.0.1:5000/config/delete`
+    const url_robots_delete = `http://127.0.0.1:5000/robots/delete`
+    delete_data(url_config_delete)
+    delete_data(url_robots_delete)
     // go back to the configuration site
-    window.location.href = "../Configuration_page/config.html";
+    //window.location.href = "../Configuration_page/config.html";
 
 }
 
@@ -127,6 +127,7 @@ async function Robot_method(robot, url) {
 // Example usage
 const url_charge_robot = `http://127.0.0.1:5000/robot/charge`;
 const url_deliever_robot = `http://127.0.0.1:5000/robots/deliever`;
+//reset_sim();
 //Robot_method(robotInstances[2], url_charge_robot);  // Call the method for robot with ID 1
 //Robot_method(robotInstances[2], url_deliever_robot);
 

@@ -27,12 +27,13 @@ CREATE TABLE IF NOT EXISTS robots (
     status TEXT,
     dest TEXT,
     speed REAL,
-    weight REAL)
+    weight REAL,
+    start_pos TEXT)
     """
 cursor.execute(command2)
 # add to config
 cursor.execute("INSERT INTO configuration VALUES (3, 3, 100.0, 100.0, 75.5, 1.0)")
-cursor.execute("INSERT INTO robots VALUES (1, 'yes', 100.0, 2, 'packages', 'waiting', 'here', 1.0, 100.0)")
+cursor.execute("INSERT INTO robots VALUES (1, 'yes', 100.0, 2, 'packages', 'waiting', 'here', 1.0, 100.0, 'start')")
 connection.commit()
 
 cursor.execute("SELECT * FROM configuration")

@@ -23,7 +23,8 @@ class Simulation:
         usage = config['usage']
 
         # Robot Data
-        pos = "(100, 50)" # LOAD: load the real starting Position (Station)
+        start_pos = "(100, 50)" # LOAD: load the real starting Position (Station)
+        pos = start_pos
         energy = battery # LOAD: from config
         numb_packages = max_packages
         package_list = []

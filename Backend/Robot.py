@@ -13,7 +13,7 @@ class Robot:
     homestation = CON.HOMESTATION
 
 #Constructor
-    def __init__(self, id, position, energy, numb_packages, package_list, status, dest, speed, weight):
+    def __init__(self, id, position, energy, numb_packages, package_list, status, dest, speed, weight, start_pos):
         self.id = id
         self.position = position
         self.energy = energy
@@ -23,6 +23,7 @@ class Robot:
         self.dest = dest
         self.speed = speed
         self.weight = weight
+        self.start_pos = start_pos
     
     @classmethod
     def from_dict(cls, data):
@@ -37,7 +38,8 @@ class Robot:
             status = data['status'],
             dest = data['dest'],
             speed = data['speed'],
-            weight = data['weight']
+            weight = data['weight'],
+            start_pos = data['start_pos']
         )
         
      
@@ -53,7 +55,8 @@ class Robot:
             "status": self.status,
             "dest": self.dest,
             "speed": self.speed,
-            "weight": self.weight
+            "weight": self.weight,
+            "start_pos": self.start_pos
         }
     
     
