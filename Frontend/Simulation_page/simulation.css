@@ -18,7 +18,27 @@ main {
   display: grid;
   grid-template-columns: 3fr 1fr;
   gap: 10px;
-  padding: 20px;
+  padding: 0;  /* Entfernt unnötige Abstände */
+  height: 100vh; /* Höhe auf den gesamten Bildschirm setzen */
+}
+
+/* Left side (container für Speed, Cancel Simulation etc.) */
+.left-side {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Inhalt nach oben verschieben */
+  gap: 10px;
+  padding: 0; /* Entferne Padding */
+  margin: 0; /* Entferne Margin */
+  height: 100%; /* Setzt die Höhe der linken Seite auf 100% */
+}
+
+/* Die Map nimmt den verbleibenden Platz auf der linken Seite ein */
+.map-container {
+  flex-grow: 1; /* Erlaubt, dass die Karte den gesamten verbleibenden Platz einnimmt */
+  margin: 0; /* Entferne den Abstand oben */
+  padding: 0; /* Entferne das Padding, um den Raum effizient zu nutzen */
+  height: 100%; /* Die Karte nimmt die komplette Höhe des Containers ein */
 }
 
 /* header */
@@ -68,12 +88,12 @@ main {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* icon styles */
-.single-icon {
-  list-style: none;
-  display: flex;
-  align-items: center;
-  gap: 10px;
+.info-icons {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  padding: 10px;
+  height: auto; /* Optional: Entferne die feste Höhe */
 }
 
 .info-icons img {
@@ -84,13 +104,11 @@ main {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.info-icons {
-  padding: 10px;
+.single-icon {
+  list-style: none;
   display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  gap: 15px;
-  height: 35vh;
+  align-items: center;
+  gap: 10px;
 }
 
 /* destination */
@@ -128,6 +146,9 @@ main {
   overflow-y: auto;
   padding: 20px;
   color: rgb(2, 2, 2);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .roboter-list {
@@ -171,4 +192,9 @@ button.cancel-simulation:hover {
   background-color: #e53935;
   transform: scale(1.05); 
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.486); 
+}
+
+/* info-section - der Block mit den Buttons und Icons */
+.info-section {
+  margin-top: auto; /* Positioniert den Block mit den Icons und Buttons unten */
 }
