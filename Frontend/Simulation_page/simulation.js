@@ -1,4 +1,60 @@
+import { simulationTimer } from './simulationTimer.js';
 
+const timer = new simulationTimer();
+const config = get_config()
+  
+// Simulate time advancing every second
+const simulationInterval = setInterval(() => {
+  timer.advanceTime();
+  console.log("Current Time:", timer.getCurrentTime());
+
+  // Stop the simulation after one full cycle for demonstration
+  if (timer.getCurrentTime() === "12:00") {
+    clearInterval(simulationInterval);
+    console.log("Simulation complete.");
+  }
+}, 1000 * config.speed); // Advance simulation every second
+
+
+async function reset_sim(){
+    // reset Time
+    timer.stop()
+    timer.reset()
+    // delete database data
+    url_config_delete = `http://127.0.0.1:5000/config/delete`
+    url_robots_delete = `http://127.0.0.1:5000/robots/delete`
+    delete_config(url_config_delete)
+    delete_config(url_robots_delete)
+    // go back to the configuration site
+    window.location.href = "../Configuration_page/config.html";
+
+}
+
+
+// Function to send DELETE request
+function delete_data(url) {
+  fetch(url, {
+    method: 'DELETE',  // HTTP method is DELETE
+    headers: {
+      'Content-Type': 'application/json',  // Set the request body as JSON
+    },
+  })
+  .then(response => {
+    if (response.ok) {
+      console.log("Data deleted successfully!");
+      return response.json();
+    } else {
+      throw new Error('Failed to delete data');
+    }
+  })
+  .then(data => {
+    console.log(data);
+  })
+  .catch(error => {
+    console.error("Error:", error);
+  });
+}
+// Function to get Robot data
 async function getRobotsData() {
     try {
         const response = await fetch(`http://127.0.0.1:5000/robots`);  // Fetch robots data from Flask server
@@ -37,6 +93,7 @@ async function get_config() {
 
         if (response.ok) {
             console.log[config_data]
+            return config_data
         } else {
             console.log("Error:", config_data.error);  // Handle any errors
         }
@@ -70,33 +127,9 @@ async function Robot_method(robot, url) {
 // Example usage
 const url_charge_robot = `http://127.0.0.1:5000/robot/charge`;
 const url_deliever_robot = `http://127.0.0.1:5000/robots/deliever`;
-Robot_method(robotInstances[2], url_charge_robot);  // Call the method for robot with ID 1
-Robot_method(robotInstances[2], url_deliever_robot);
+//Robot_method(robotInstances[2], url_charge_robot);  // Call the method for robot with ID 1
+//Robot_method(robotInstances[2], url_deliever_robot);
 
-
-/*
-fetch(url_get_robots)
-    .then(response => {
-        if (!response.ok) {
-            console.error(`Error: Received status code ${response.status}`);
-            return null;
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log('Fetched Robots:', data);
-
-        // Convert each robot dictionary into a Robot object
-        const robots = data.map(robotData => Robot.fromDict(robotData));
-
-        // Now you can use the Robot objects
-        robots.forEach(robot => {
-            console.log(`Robot ID: ${robot.id}, Position: ${robot.position}`);
-        });
-    })
-    .catch(error => {
-        console.error("Error fetching robot data:", error);
-    });*/
 
 // Beispielausgabe in der Konsole
 //console.log(robots); // Array mit Roboter-Objekten

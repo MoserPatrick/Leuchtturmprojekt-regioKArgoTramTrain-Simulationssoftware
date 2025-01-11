@@ -339,6 +339,45 @@ def update_config():
     else:
         return jsonify({"error": "Request must be in JSON format"}), 400
 
+@app.route('/config/delete', methods=['DELETE'])
+def config_delete():
+    try:
+        # Establish connection to the SQLite database
+        conn = sqlite3.connect('simulation.db')
+        cursor = conn.cursor()
+
+        # SQL query to delete all records from the table (e.g., "items")
+        cursor.execute("DELETE FROM configuration")
+        
+        # Commit the changes
+        conn.commit()
+        
+        # Close the connection
+        conn.close()
+
+        return jsonify({"message": "All data deleted successfully!"}), 200
+    except Exception as e:
+        return jsonify({"message": "Error deleting data", "error": str(e)}), 500
+
+@app.route('/robots/delete', methods=['DELETE'])
+def config_delete():
+    try:
+        # Establish connection to the SQLite database
+        conn = sqlite3.connect('simulation.db')
+        cursor = conn.cursor()
+
+        # SQL query to delete all records from the table (e.g., "items")
+        cursor.execute("DELETE FROM robots")
+        
+        # Commit the changes
+        conn.commit()
+        
+        # Close the connection
+        conn.close()
+
+        return jsonify({"message": "All data deleted successfully!"}), 200
+    except Exception as e:
+        return jsonify({"message": "Error deleting data", "error": str(e)}), 500
 
 # Robot Methods
 
