@@ -83,51 +83,48 @@ function delete_data(url) {
 }
 // Function to get Robot data
 async function getRobotsData() {
-    try {
-        const response = await fetch(`http://127.0.0.1:5000/robots`);  // Fetch robots data from Flask server
-        const robotsData = await response.json();  // Parse the response as JSON
+  try {
+      const response = await fetch('http://127.0.0.1:5000/robots'); // Fetch robots data
+      if (!response.ok) {
+          console.error(`Failed to fetch robots data: ${response.status} ${response.statusText}`);
+          return []; // Return an empty array if fetch fails
+      }
 
-        if (response.ok) {
-            const robotInstances = [];  // Array to store robot objects
+      const robotsData = await response.json(); // Parse the response as JSON
+      console.log('Fetched robots data:', robotsData);
 
-            robotsData.forEach(robot => {
-                const robotInstance = {
-                    id: robot.id,
-                    position: robot.position,
-                    energy: robot.energy,
-                    numb_packages: robot.numb_packages,
-                    status: robot.status,
-                    destination: robot.destination,
-                    speed: robot.speed,
-                    weight: robot.weight
-                };
-
-                robotInstances.push(robotInstance);  // Store robot object in the array
-            });
-            // How to get Attributes: RobotInsatnces[which one].attribute
-            return robotInstances;
-        } else {
-            console.log("Error:", robotsData.error);  // Handle any errors
-        }
-    } catch (error) {
-        console.error("Error fetching robots data:", error);  // Catch and log any errors
-    }
+      // Process each robot into a standard object
+      return robotsData.map(robot => ({
+          id: robot.id,
+          position: robot.position,
+          energy: robot.energy,
+          numb_packages: robot.numb_packages,
+          status: robot.status,
+          destination: robot.destination,
+          speed: robot.speed,
+          weight: robot.weight
+      }));
+  } catch (error) {
+      console.error('Error fetching robots data:', error);
+      return []; // Return an empty array on error
+  }
 }
 
 async function get_config() {
-    try {
-        const response = await fetch(`http://127.0.0.1:5000/config`);  // Fetch robots data from Flask server
-        const config_data = await response.json();  // Parse the response as JSON
+  try {
+      const response = await fetch('http://127.0.0.1:5000/config'); // Fetch config data
+      if (!response.ok) {
+          console.error(`Failed to fetch config data: ${response.status} ${response.statusText}`);
+          return null; // Return null if fetch fails
+      }
 
-        if (response.ok) {
-            console.log[config_data]
-            return config_data
-        } else {
-            console.log("Error:", config_data.error);  // Handle any errors
-        }
-    } catch (error) {
-        console.error("Error fetching config data:", error);  // Catch and log any errors
-    }
+      const config_data = await response.json(); // Parse the response as JSON
+      console.log('Fetched config data:', config_data);
+      return config_data;
+  } catch (error) {
+      console.error('Error fetching config data:', error);
+      return null; // Return null on error
+  }
 }
 
 async function Robot_method(robot, url) {
