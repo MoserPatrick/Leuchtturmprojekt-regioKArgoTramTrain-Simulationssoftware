@@ -20,6 +20,51 @@ const simulationInterval = setInterval(() => {
 }, 1000 * config.speed); // Advance simulation every second
 */
 
+async function create_top_line(config){
+      // Create the left section (d-flex)
+  
+  const leftDiv = document.createElement('div');
+  leftDiv.classList.add('left', 'd-flex');
+
+  // Create the p elements inside the left div
+  const leftP1 = document.createElement('p');
+  leftP1.textContent = 'Number Of Robots:   ' + JSON.stringify(config.numb_robots);
+  const leftP2 = document.createElement('p');
+  leftP2.textContent = 'Number Of Packages:   ' + JSON.stringify(config.max_packages);
+
+  // Append the p elements to the left div
+  leftDiv.appendChild(leftP1);
+  leftDiv.appendChild(leftP2);
+
+  // Create the right section (d-flex)
+  const rightDiv = document.createElement('div');
+  rightDiv.classList.add('right', 'd-flex');
+
+  // Create the p element for speed inside the right div
+  const rightP = document.createElement('p');
+  rightP.textContent = 'Speed:   ' + JSON.stringify(config.sim_speed);
+
+  // Create the cancel simulation button
+  const cancelButton = document.createElement('button');
+  cancelButton.classList.add('cancel-simulation');
+  cancelButton.id = 'cancel-simulation';
+  cancelButton.textContent = 'Cancel Simulation';
+
+  // Add event listener for the button
+  cancelButton.addEventListener('click', () => cancel_button()); 
+
+  // Append the p and button elements to the right div
+  rightDiv.appendChild(rightP);
+  rightDiv.appendChild(cancelButton);
+
+  // Now append both left and right divs to a parent container, for example:
+  const top_line = document.getElementById('top-line'); // Assuming you have a container with this id
+  top_line.appendChild(leftDiv);
+  top_line.appendChild(rightDiv);
+
+}
+
+
 async function show_robot(robot){
     console.log(`Button for robot ${robot.id} clicked`);
     // creating elements to showcase the robots data
@@ -124,11 +169,8 @@ function create_robot_element(robot) {
   return button_robot
   }
   
-
-const button = document.getElementById('cancel-simulation');
-if (button) {
-  button.addEventListener('click', async function() {
-    console.log("deleting!!");
+async function cancel_button(){
+  console.log("deleting!!");
     // reset Time
     if (timer) {
       timer.stop();
@@ -143,14 +185,17 @@ if (button) {
     console.log("Data deleted, redirecting...");
     //window.location.href = "../Configuration_page/config.html";
     window.location.replace("../Configuration_page/config.html");
-  });
-} else {
-  console.log("Cancel button not found!");
 }
+
 
   // Get the parent div and add robots to the DOM
 // Wait until the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', async function () {
+
+    const config_top_line = await get_config();
+    create_top_line(config_top_line);
+
+
     // Get the parent div and add robots to the DOM
     const roboterListDiv = document.getElementById('roboter-list');
     const robot_list = await getRobotsData();
