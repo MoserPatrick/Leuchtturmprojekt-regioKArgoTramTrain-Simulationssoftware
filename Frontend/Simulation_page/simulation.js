@@ -20,41 +20,133 @@ const simulationInterval = setInterval(() => {
 }, 1000 * config.speed); // Advance simulation every second
 */
 
+async function show_robot(robot){
+    console.log(`Button for robot ${robot.id} clicked`);
+    // creating elements to showcase the robots data
+    // remove past containers
+    const existing_info_icons = document.querySelector('.info-icons');
+    // If it exists, remove it
+    if (existing_info_icons) {
+        existing_info_icons.remove();
+    }
+    const existinglocDest = document.querySelector('.location-destination');
+    // If it exists, remove it
+    if (existinglocDest) {
+        existinglocDest.remove();
+    }
+    // create big container called "info-icons"
+    const iconContainer = document.createElement('div');
+    iconContainer.classList.add('info-icons');
 
+    // Define the icon data (image sources and the text)
+    const icons = [
+        { src: 'images/Robot.png', text: robot.id },
+        { src: 'images/box.png', text: robot.numb_packages },
+        { src: 'images/bigbattery.png', text: robot.energy },
+        { src: 'images/Delivering.png', text: robot.status }
+    ];
+
+    // Loop through the icon data to create list items dynamically
+    icons.forEach(icon => {
+        const single_icon = document.createElement('li');
+        single_icon.classList.add('single-icon');
+
+        const image = document.createElement('img');
+        image.src = icon.src;
+
+        const paragraph = document.createElement('p');
+        paragraph.textContent = icon.text;
+
+        // Append the image and paragraph to the list item
+        single_icon.appendChild(image);
+        single_icon.appendChild(paragraph);
+
+        // Append the list item to the container
+        iconContainer.appendChild(single_icon);
+    });
+
+    const locationDestination = document.createElement('div');
+    locationDestination.classList.add('location-destination');
+
+    // Create the location div
+    const location = document.createElement('div');
+    location.classList.add('location');
+
+    // Create the image for the location
+    const locationImage = document.createElement('img');
+    locationImage.src = 'images/pngegg.png'; // Set image source
+    location.appendChild(locationImage);
+
+    // Create the paragraph for the location text
+    const locationText = document.createElement('p');
+    locationText.textContent = 'Station: Alpha'; // Set location text
+    location.appendChild(locationText);
+
+    // Create the destination div
+    const destination = document.createElement('div');
+    destination.classList.add('destination');
+
+    // Create the paragraph for the destination text
+    const destinationText = document.createElement('p');
+    destinationText.textContent = 'Destination: Kußmaulstraße'; // Set destination text
+    destination.appendChild(destinationText);
+
+    // Create the image for the destination
+    const destinationImage = document.createElement('img');
+    destinationImage.src = 'images/pngegg.png'; // Set image source
+    destination.appendChild(destinationImage);
+
+    // Append the location and destination divs to the main container
+    locationDestination.appendChild(location);
+    locationDestination.appendChild(destination);
+
+    // Append the icon container other parent element called "info-sheet"
+    const info_sheet = document.getElementById('info-sheet');
+    info_sheet.appendChild(iconContainer);  // Or any other container
+    info_sheet.appendChild(locationDestination)
+
+
+}
 
 
 // creating the right Robot list
-function create_robot_element(id) {
-    console.log("creating robots");
-    const image = 'images/Robot.png';
-    const listItem = document.createElement('li');
-    listItem.classList.add('single-roboter');
-    listItem.innerHTML = `${id}. <img src="${image}" />`;
-    return listItem;
-  }
+function create_robot_element(robot) {
+  const image_robot = './images/Robot.png'; 
 
-  const button = document.getElementById('cancel-simulation');
-  if (button) {
-    button.addEventListener('click', async function() {
-      console.log("deleting!!");
-      // reset Time
-      if (timer) {
-        timer.stop();
-        timer.reset();
-      }
-      // delete database data
-      const url_config_delete = `http://127.0.0.1:5000/config/delete`;
-      const url_robots_delete = `http://127.0.0.1:5000/robots/delete`;
-      await delete_data(url_config_delete);
-      await delete_data(url_robots_delete);
-      // go back to the configuration site
-      console.log("Data deleted, redirecting...");
-      //window.location.href = "../Configuration_page/config.html";
-      window.location.replace("../Configuration_page/config.html");
-    });
-  } else {
-    console.log("Cancel button not found!");
+  // Create a button element instead of an <li>
+  const button_robot = document.createElement('button');
+  button_robot.classList.add('single-roboter'); // Add your styling class
+  button_robot.id = `robot-${robot.id}`; // Set the id for the button
+  button_robot.innerHTML = `${robot.id}. <img src="${image_robot}" alt="Robot" />`; // Add the image and ID text
+
+  // (Optional) Add event listener
+  button_robot.addEventListener('click', () => show_robot(robot));
+  return button_robot
   }
+  
+
+const button = document.getElementById('cancel-simulation');
+if (button) {
+  button.addEventListener('click', async function() {
+    console.log("deleting!!");
+    // reset Time
+    if (timer) {
+      timer.stop();
+      timer.reset();
+    }
+    // delete database data
+    const url_config_delete = `http://127.0.0.1:5000/config/delete`;
+    const url_robots_delete = `http://127.0.0.1:5000/robots/delete`;
+    await delete_data(url_config_delete);
+    await delete_data(url_robots_delete);
+    // go back to the configuration site
+    console.log("Data deleted, redirecting...");
+    //window.location.href = "../Configuration_page/config.html";
+    window.location.replace("../Configuration_page/config.html");
+  });
+} else {
+  console.log("Cancel button not found!");
+}
 
   // Get the parent div and add robots to the DOM
 // Wait until the DOM is fully loaded
@@ -65,8 +157,8 @@ document.addEventListener('DOMContentLoaded', async function () {
     
     // Create the Robots in the List
     robot_list.forEach(robot => {
-      robot = create_robot_element(robot.id)
-      roboterListDiv.appendChild(robot);
+      const robot_element = create_robot_element(robot)
+      roboterListDiv.appendChild(robot_element);
     });
     
   });
