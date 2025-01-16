@@ -1,13 +1,59 @@
-//import { simulationTimer } from './simulationTimer.js';
+import { simulationTimer } from './simulationTimer.js';
+
+
+let timer = new simulationTimer();
+if (!timer.running){
+  timer.running = true;
+}
+//const config = get_config()
+/*
+// Simulate time advancing every second
+const simulationInterval = setInterval(() => {
+  timer.advanceTime();
+  console.log("Current Time:", timer.getCurrentTime());
+
+  // Stop the simulation after one full cycle for demonstration
+  if (timer.getCurrentTime() === "12:00") {
+    clearInterval(simulationInterval);
+    console.log("Simulation complete.");
+  }
+}, 1000 * config.speed); // Advance simulation every second
+*/
+
+
 
 
 // creating the right Robot list
 function create_robot_element(id) {
+    console.log("creating robots");
     const image = 'images/Robot.png';
     const listItem = document.createElement('li');
     listItem.classList.add('single-roboter');
     listItem.innerHTML = `${id}. <img src="${image}" />`;
     return listItem;
+  }
+
+  const button = document.getElementById('cancel-simulation');
+  if (button) {
+    button.addEventListener('click', async function() {
+      console.log("deleting!!");
+      // reset Time
+      if (timer) {
+        timer.stop();
+        timer.reset();
+      }
+      // delete database data
+      const url_config_delete = `http://127.0.0.1:5000/config/delete`;
+      const url_robots_delete = `http://127.0.0.1:5000/robots/delete`;
+      await delete_data(url_config_delete);
+      await delete_data(url_robots_delete);
+      // go back to the configuration site
+      console.log("Data deleted, redirecting...");
+      //window.location.href = "../Configuration_page/config.html";
+      window.location.replace("../Configuration_page/config.html");
+    });
+  } else {
+    console.log("Cancel button not found!");
   }
 
   // Get the parent div and add robots to the DOM
@@ -22,45 +68,12 @@ document.addEventListener('DOMContentLoaded', async function () {
       robot = create_robot_element(robot.id)
       roboterListDiv.appendChild(robot);
     });
+    
   });
 
-
-
-/*
-const timer = new simulationTimer();
-const config = get_config()
-  
-// Simulate time advancing every second
-const simulationInterval = setInterval(() => {
-  timer.advanceTime();
-  console.log("Current Time:", timer.getCurrentTime());
-
-  // Stop the simulation after one full cycle for demonstration
-  if (timer.getCurrentTime() === "12:00") {
-    clearInterval(simulationInterval);
-    console.log("Simulation complete.");
-  }
-}, 1000 * config.speed); // Advance simulation every second
-*/
-
-async function reset_sim(){
-    // reset Time
-    timer.stop()
-    timer.reset()
-    // delete database data
-    const url_config_delete = `http://127.0.0.1:5000/config/delete`
-    const url_robots_delete = `http://127.0.0.1:5000/robots/delete`
-    delete_data(url_config_delete)
-    delete_data(url_robots_delete)
-    // go back to the configuration site
-    //window.location.href = "../Configuration_page/config.html";
-
-}
-
-
 // Function to send DELETE request
-function delete_data(url) {
-  fetch(url, {
+async function delete_data(url) {
+  await fetch(url, {
     method: 'DELETE',  // HTTP method is DELETE
     headers: {
       'Content-Type': 'application/json',  // Set the request body as JSON

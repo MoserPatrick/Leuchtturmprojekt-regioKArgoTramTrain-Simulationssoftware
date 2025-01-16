@@ -4,6 +4,7 @@ import sqlite3
 import json
 from package import Package
 from Robot import Robot
+from init_robot import init_robot
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
@@ -53,7 +54,7 @@ def insert_robot(robot):
     # Insert robot into the database
     cursor.execute('''
             INSERT INTO robots (id, position, energy, numb_packages, package_list, status, dest, speed, weight, start_pos)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', (robot.id, robot.position, robot.energy, robot.numb_packages, package_list_json, robot.status, robot.dest, robot.speed, robot.weight, robot.start_pos))  # Use placeholders to avoid SQL injection
     conn.commit()
     conn.close()
@@ -88,10 +89,10 @@ def get_config():
     query = 'SELECT * FROM configuration'
 
     # fetch data from database
-    data = fetch_data_from_db(query)
+    data = fetch_one(query)
 
     # Prepare the data in a list of dictionaries to return as JSON
-    row = data[0]
+    row = data
 
     config = {
         'numb_robots': row[0],
@@ -415,6 +416,21 @@ def load_robot():
         data = request.get_json()
         robot = create_robot(data)
         robot.loadPackage()
+
+
+# Simulation methods
+
+@app.route('/start_sim', methods=['POST'])
+def start_sim():
+    if request.is_json:
+        print("if")
+        # Get JSON data from the request
+        data = request.get_json()
+        numb_robots = data['numb_robots']
+        max_packages = data['max_packages']
+        battery = data['battery']
+        init_robot.init_robot(numb_robots, max_packages, battery)
+        return ("it works")
 
 
 if __name__ == '__main__':

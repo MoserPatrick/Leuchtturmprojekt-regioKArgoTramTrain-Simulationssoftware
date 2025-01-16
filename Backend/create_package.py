@@ -26,7 +26,7 @@ class package_creator:
             print(f"Error: Received status code {response.status_code}")
             print("Message:", response.text)
 
-        for i in range(numb_packages):
+        for i in range(int(numb_packages)):
             '''# Random Package Generator
             # get weigth
             if (numb_packages[i+1]):
