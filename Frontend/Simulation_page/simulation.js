@@ -88,7 +88,9 @@ async function show_robot(robot){
         { src: 'images/Robot.png', text: robot.id },
         { src: 'images/box.png', text: robot.numb_packages },
         { src: 'images/bigbattery.png', text: robot.energy },
-        { src: 'images/Delivering.png', text: robot.status }
+        { src: 'images/Delivering.png', text: robot.status },
+        { src: 'images/Speed.png', text: robot.speed},
+        { src: 'images/Weight.png', text: robot.weight}
     ];
 
     // Loop through the icon data to create list items dynamically
@@ -124,7 +126,7 @@ async function show_robot(robot){
 
     // Create the paragraph for the location text
     const locationText = document.createElement('p');
-    locationText.textContent = 'Station: Alpha'; // Set location text
+    locationText.textContent = JSON.stringify(robot.start_pos); // Set location text
     location.appendChild(locationText);
 
     // Create the destination div
@@ -133,7 +135,7 @@ async function show_robot(robot){
 
     // Create the paragraph for the destination text
     const destinationText = document.createElement('p');
-    destinationText.textContent = 'Destination: Kußmaulstraße'; // Set destination text
+    destinationText.textContent = JSON.stringify(robot.dest); // Set destination text
     destination.appendChild(destinationText);
 
     // Create the image for the destination
@@ -250,9 +252,10 @@ async function getRobotsData() {
           energy: robot.energy,
           numb_packages: robot.numb_packages,
           status: robot.status,
-          destination: robot.destination,
+          dest: robot.dest,
           speed: robot.speed,
-          weight: robot.weight
+          weight: robot.weight,
+          start_pos: robot.start_pos
       }));
   } catch (error) {
       console.error('Error fetching robots data:', error);
