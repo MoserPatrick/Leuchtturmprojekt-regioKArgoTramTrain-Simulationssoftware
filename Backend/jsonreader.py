@@ -1,5 +1,6 @@
 import json
 import Station
+from harversine import haversine
 
 stationlist = []
 names = []
@@ -13,6 +14,7 @@ data = json.load(f)
 for item in data:
     names.append(item['name'])
     trias_id.append(item['triasID'])
+    #print(item['triasID'])
     # test if key "coordPositionWGS84" exist
     if "coordPositionWGS84" in item:
         coordinates.append({
@@ -22,6 +24,7 @@ for item in data:
     else:
         print(f"Warnung: 'coordPositionWGS84' fehlt bei der Station {item.get('name', 'Unbekannt')}")
 for i in range(len(names)):
+    #print(trias_id[i])
     stationlist.append(Station.Station(names[i], trias_id[i], coordinates[i]["lat"], coordinates[i]["long"]))
 
 
@@ -30,22 +33,34 @@ for i in range(len(names)):
 f.close
 #opens all Lines File
 d = open('Backend/jsonFiles/KVV_Lines_Stops_Based_v2.json')
-
+#[[de:2314]]
 trias_id_list = []
 numbers = []
 #gets trias numbers of lines and "name" of the line
 data = json.load(d)
 for item in data['lines']:
+    #print(item['stations'])
     trias_id_list.append(item['stations'])
     numbers.append(item['number'])
 
 print(numbers)
 #adds lines to the corret stations
-for elements in stationlist:
+for element in stationlist:
+
     for i in range (len(trias_id_list)):
+
         for j in range (len(trias_id_list[i])):
-            if elements.get_triasID() == trias_id_list[i][j]:
-                elements.add_line(numbers[i])
+
+            if element.get_triasID() == trias_id_list[i][j]:
+
+                #print(trias_id_list[i][j])
+
+                #print(element.get_triasID()+)
+
+                element.add_line(numbers[i])
+            
+
+
                 
 stationlist_without_busstops = []
 
@@ -55,15 +70,14 @@ for elements in stationlist:
 
 
 
-
 d.close
 
-'''for element in stationlist_without_busstops :
+'''for element in stationlist :
     print(element.get_name())
     print(element.get_lines())
     print(element.get_lat())
     print(element.get_long())
-    print(element.get_triasID())'''
+    print(element.get_triasID()+"\n")'''
 
 """for element in stationlist_without_busstops:
     if len(element.get_lines()) > 1:
@@ -82,129 +96,50 @@ mit straßenübergang
 -> vorschlag : 1-5 min randomizer zusätzlich zu gewicht
 """
 
-stationlist_line_1 = []
-stationlist_line_2 = []
-stationlist_line_3 = []
-stationlist_line_4 = []
-stationlist_line_5 = []
-stationlist_line_8 = []
-stationlist_line_17 = []
-stationlist_line_18 = []
-stationlist_line_S1 = []
-stationlist_line_S2 = []
-stationlist_line_S3 = []
-stationlist_line_S4 = []
-stationlist_line_S5 = []
-stationlist_line_S6 = []
-stationlist_line_S7 = []
-stationlist_line_S8 = []
-stationlist_line_S9 = []
-stationlist_line_S11 = []
-stationlist_line_S12 = []
-stationlist_line_S32 = []
-stationlist_line_S33 = []
-stationlist_line_S52 = []
-stationlist_line_S71 = []
-stationlist_line_S81 = []
-
-for element in stationlist_without_busstops:
-    match element.get_lines():
-        case trias_id_list if "1" in trias_id_list:
-            stationlist_line_1.append(element)
-        case trias_id_list if "2" in trias_id_list:
-            stationlist_line_2.append(element)
-        case trias_id_list if "3" in trias_id_list:
-            stationlist_line_3.append(element)
-        case trias_id_list if "4" in trias_id_list:
-            stationlist_line_4.append(element)
-        case trias_id_list if "5" in trias_id_list:
-            stationlist_line_5.append(element)
-        case trias_id_list if "8" in trias_id_list:
-            stationlist_line_8.append(element)
-        case trias_id_list if "17" in trias_id_list:
-            stationlist_line_17.append(element)
-        case trias_id_list if "18" in trias_id_list:
-            stationlist_line_18.append(element)
-        case trias_id_list if "S1" in trias_id_list:
-            stationlist_line_S1.append(element)
-        case trias_id_list if "S2" in trias_id_list:
-            stationlist_line_S2.append(element)
-        case trias_id_list if "S3" in trias_id_list:
-            stationlist_line_S3.append(element)
-        case trias_id_list if "S4" in trias_id_list:
-            stationlist_line_S4.append(element)
-        case trias_id_list if "S5" in trias_id_list:
-            stationlist_line_S5.append(element)
-        case trias_id_list if "S6" in trias_id_list:
-            stationlist_line_S6.append(element)
-        case trias_id_list if "S7" in trias_id_list:
-            stationlist_line_S7.append(element)
-        case trias_id_list if "S8" in trias_id_list:
-            stationlist_line_S8.append(element)
-        case trias_id_list if "S9" in trias_id_list:
-            stationlist_line_S9.append(element)
-        case trias_id_list if "S11" in trias_id_list:
-            stationlist_line_S11.append(element)
-        case trias_id_list if "S12" in trias_id_list:
-            stationlist_line_S12.append(element)
-        case trias_id_list if "S32" in trias_id_list:
-            stationlist_line_S32.append(element)
-        case trias_id_list if "S33" in trias_id_list:
-            stationlist_line_S33.append(element)
-        case trias_id_list if "S52" in trias_id_list:
-            stationlist_line_S52.append(element)
-        case trias_id_list if "S71" in trias_id_list:
-            stationlist_line_S71.append(element)
-        case trias_id_list if "S81" in trias_id_list:
-            stationlist_line_S81.append(element)
-
-"""for element in stationlist_line_1:
-    print(element.get_name())"""
+sorted_stationlist = trias_id_list
+for i in range (len(trias_id_list)):
+    for j in range (len(trias_id_list[i])):
+        for element in stationlist:
+            if element.get_triasID() == trias_id_list[i][j]:
+                sorted_stationlist[i][j] = element
 
 
-stationlist_line_2 = []
-stationlist_line_3 = []
-stationlist_line_4 = []
-stationlist_line_5 = []
-stationlist_line_8 = []
-stationlist_line_17 = []
-stationlist_line_18 = []
-stationlist_line_S1 = []
-stationlist_line_S2 = []
-stationlist_line_S3 = []
-stationlist_line_S4 = []
-stationlist_line_S5 = []
-stationlist_line_S6 = []
-stationlist_line_S7 = []
-stationlist_line_S8 = []
-stationlist_line_S9 = []
-stationlist_line_S11 = []
-stationlist_line_S12 = []
-stationlist_line_S32 = []
-stationlist_line_S33 = []
-stationlist_line_S52 = []
-stationlist_line_S71 = []
-stationlist_line_S81 = []
-
-sorted_stationlist_line_1 = []
-
-
-#TODO die linien müssen sortiert werden nach dem kvv lines stops based trias ids 
-#danach berechnen von gewichten anhand entfernung also meter und wie lang man dafür braucht
-#zusätzlich gewichte anpassen mit vll randomizer an den umstiegspunkten
-
-""""for i in range(len(trias_id_list)):
-    for j in range(len(trias_id_list[i])):
-        for element in stationlist_line_1:
-            if trias_id_list[i][j] == element.get_triasID():
-                sorted_stationlist_line_1.append(element)
-                print(element.get_name())"""
-
-
-"""for element in sorted_stationlist_line_1:
-    print(element.get_name())"""
+for list in sorted_stationlist:
+    print("---------------------------------------------------------------------------------")
+    for element in list:
+        print(element.get_name())
 
             
+# Beispiel-Koordinaten
+lat1, lon1 = 49.0019896339322, 8.45542854438636  
+lat2, lon2 = 49.0363295015307, 8.38806388123024   
+
+# Berechnung
+sum = 0
+lat1 = 0
+long1 = 0
+lat2 = 0
+long2 = 0
+i = 10
+for j in range(len(sorted_stationlist[i])-1):
+    lat1 = float(sorted_stationlist[i][j].get_lat())
+    long1 = float(sorted_stationlist[i][j].get_long())
+    lat2 = float(sorted_stationlist[i][j+1].get_lat())
+    long2 = float(sorted_stationlist[i][j+1].get_long())
+    print(sorted_stationlist[i][j].get_name())
+    print(lat1,long1)
+    print("\n")
+    print(sorted_stationlist[i][j+1].get_name())
+    print(lat2,long2)
+    
+    distance = haversine(lat1, long1, lat2, long2)
+    print(f"Die Distanz zwischen den Punkten beträgt: {distance:.2f} km")
+    print("---------------------------------------------------------")
+    sum = sum + distance
+print(sum)
+
+#19,8 km/h straßenbahnm
+
 
                 
 
