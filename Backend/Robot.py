@@ -2,6 +2,7 @@ from utils import Constants as CON
 from create_package import package_creator
 import time
 from package import Package
+from Station import Station
 import sqlite3
 import json
 import requests
@@ -32,15 +33,15 @@ class Robot:
         packages = [Package.from_dict(pkg) for pkg in data['package_list']]
         return cls(
             id=data['id'],
-            position=data['position'],
+            position= Station.from_dict(data['position']),
             energy=data['energy'],
             numb_packages=data['numb_packages'],
             package_list = packages,
             status = data['status'],
-            dest = data['dest'],
+            dest = Station.from_dict(data['dest']),
             speed = data['speed'],
             weight = data['weight'],
-            start_pos = data['start_pos']
+            start_pos = Station.from_dict(data['start_pos'])
         )
         
      
@@ -49,15 +50,15 @@ class Robot:
         # Convert object state to a dictionary (excluding methods)
         return {
             "id": self.id,
-            "position": self.position,
+            "position": self.position if isinstance(self.position, dict) else self.position.to_dict_s(),
             "energy": self.energy,
             "numb_packages": self.numb_packages,
             "package_list": [package.to_dict_p() for package in self.package_list],  # Serialize the list of objects,
             "status": self.status,
-            "dest": self.dest,
+            "dest": self.dest if isinstance(self.dest, dict) else self.dest.to_dict_s(),
             "speed": self.speed,
             "weight": self.weight,
-            "start_pos": self.start_pos
+            "start_pos": self.start_pos if isinstance(self.start_pos, dict) else self.start_pos.to_dict_s()
         }
     
     

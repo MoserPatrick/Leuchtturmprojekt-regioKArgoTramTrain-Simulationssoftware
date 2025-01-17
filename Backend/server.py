@@ -3,6 +3,7 @@ from flask_cors import CORS
 import sqlite3
 import json
 from package import Package
+from Station  import Station
 from Robot import Robot
 from init_robot import init_robot
 
@@ -50,12 +51,16 @@ def insert_robot(robot):
 
     # Serialize the package_list to a JSON string
     package_list_json = json.dumps([package.to_dict_p() for package in robot.package_list])
+    position_json = json.dumps(robot.position) if isinstance(robot.position, dict) else robot.position
+    dest_json = json.dumps(robot.dest) if isinstance(robot.dest, dict) else robot.dest
+    start_pos_json = json.dumps(robot.start_pos) if isinstance(robot.start_pos, dict) else robot.start_pos
+
     
     # Insert robot into the database
     cursor.execute('''
             INSERT INTO robots (id, position, energy, numb_packages, package_list, status, dest, speed, weight, start_pos)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ''', (robot.id, robot.position, robot.energy, robot.numb_packages, package_list_json, robot.status, robot.dest, robot.speed, robot.weight, robot.start_pos))  # Use placeholders to avoid SQL injection
+        ''', (robot.id, position_json, robot.energy, robot.numb_packages, package_list_json, robot.status, dest_json, robot.speed, robot.weight, start_pos_json))  # Use placeholders to avoid SQL injection
     conn.commit()
     conn.close()
 
@@ -138,7 +143,7 @@ def get_robots():
 
 @app.route('/robot/<robot_id>', methods=['GET'])
 def get_robot(robot_id):
-    print("robto giving works")
+    print("getting one robot")
     query = 'SELECT * FROM robots WHERE id = ?'
 
     # fetch data from database
@@ -150,15 +155,15 @@ def get_robot(robot_id):
     
     robot = {
         'id': data[0],
-        'position': data[1],
+        'position': json.loads(data[1]) if data[1] else [],
         'energy': data[2],
         'numb_packages': data[3],
         'package_list': json.loads(data[4]) if data[4] else [],
         'status': data[5],
-        'dest': data[6],
+        'dest': json.loads(data[6]) if data[6] else [],
         'speed': data[7],
         'weight': data[8],
-        'start_pos': data[9]
+        'start_pos': json.loads(data[9]) if data[9] else []
     }
     print(robot)
     robot_json = json.dumps(robot)
@@ -418,6 +423,56 @@ def load_robot():
         robot = create_robot(data)
         robot.loadPackage()
 
+# Statin methods
+@app.route('/stations', methods=['GET'])
+def get_all_stations():
+    query = 'SELECT * FROM stations'
+
+    # fetch data from database
+    data = fetch_data_from_db(query)
+
+    # Prepare the data in a list of dictionaries to return as JSON
+    stations = []
+
+    for row in data:
+        station = {
+            'name': row[0],
+            'trias_id': row[1],
+            'lines': row[2],
+            'lat': row[3],
+            'long': row[4],
+            'connections': row[5]
+        }
+        stations.append(station)
+
+        # Return the data as JSON
+    return jsonify(stations)
+
+@app.route('/station/<trias_id>', methods=['GET'])
+def get_station(trias_id):
+    print("getting one  station")
+    query = 'SELECT * FROM stations WHERE trias_id = ?'
+
+    # fetch data from database
+    print(fetch_one(query, (trias_id,)))
+    data = fetch_one(query, (trias_id,))
+    if data is None:
+        return jsonify({'error': 'Robot not found'}), 404
+    # Prepare the data in a list of dictionaries to return as JSON
+    
+    station = {
+        'name': data[0],
+        'trias_id': data[1],
+        'lines': json.loads(data[2]) if data[2] else [],
+        'lat': data[3],
+        'long': data[4],
+        'connections': json.loads(data[5]) if data[5] else []
+    }
+    print(station)
+    station_json = json.dumps(station)
+    print("string", station_json)
+    # Return the data as JSON
+    return station_json
 
 # Simulation methods
 

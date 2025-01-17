@@ -8,6 +8,29 @@ class Station:
         self.long = long
         self.connections = [] # Liste von Verbindungen (Zielstation, Gewicht, Linie)
 
+    def to_dict_s(self):
+        # Convert Package object to a dictionary
+        return {
+            "name": self.name,
+            "trias_id": self.trias_id,
+            "lines": self.lines,
+            "lat": self.lat,
+            "long": self.long,
+            "connection": self.connections
+        }
+    
+    @classmethod
+    def from_dict(cls, data):
+        return cls(
+            name=data['name'],
+            trias_id = data['tris_id'],
+            lines = data['lines'],
+            lat=data['lat'],
+            long = data['long'],
+            connection = data['connection']
+        )
+
+
     def add_connection(self, target_station, time, line) :
         self.connections.append((target_station, time, line))
 

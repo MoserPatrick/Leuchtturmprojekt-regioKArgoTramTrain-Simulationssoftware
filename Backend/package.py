@@ -1,3 +1,4 @@
+from Station import Station
 class Package:
     
 #Constructor
@@ -15,7 +16,7 @@ class Package:
             "width": self.width,
             "height": self.height,
             "length": self.length,
-            "destination": self.destination
+            "destination": self.destination if isinstance(self.destination, dict) else self.destination.to_dict_s()
         }
     
     @classmethod
@@ -25,5 +26,5 @@ class Package:
             width = data['width'],
             height = data['height'],
             length = data['length'],
-            destination = data['destination']
+            destination = Station.from_dict(data['destination'])
             )
