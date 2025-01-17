@@ -134,12 +134,20 @@ for j in range(len(sorted_stationlist[i])-1):
     
     distance = haversine(lat1, long1, lat2, long2)
     print(f"Die Distanz zwischen den Punkten beträgt: {distance:.2f} km")
+    time = 0
+    if i <= 7:
+        #Straßenbahn
+        geschw = 19,8
+        time = (distance/geschw)*60
+    else:
+        #Stadtbahn
+        geschw = 30
+        time = (distance/geschw)*60
+    print (time)
     print("---------------------------------------------------------")
     sum = sum + distance
 print(sum)
-
-#19,8 km/h straßenbahnm
-
-
+#19,8 km/h straßenbahnm 0-7
+#30 km/h stadtbahnen 8-17
                 
 
