@@ -82,7 +82,6 @@ class Robot:
         self.energy = 1000.0
         url_patch_robot = f"http://127.0.0.1:5000/robot/{self.id}"
         json_robot = self.to_dict()
-        print("enery", json_robot['energy'])
         requests.patch(url_patch_robot, json=json_robot)
         pass
 

@@ -230,7 +230,7 @@ def update_robots(robot_id):
     if request.is_json:
         # Get the JSON data from the request
         data = request.get_json()
-
+        
         # Extract individual fields from the JSON data
         id = data.get('id')
         position = data.get('position')
@@ -271,6 +271,7 @@ def update_robots(robot_id):
         conn = sqlite3.connect('simulation.db')
         cursor = conn.cursor()
 
+        print("got till here")
         # Insert robot into the database
         cursor.execute(f'UPDATE robots SET {updates_query} WHERE id = ?', parameters)  # Use placeholders to avoid SQL injection
         conn.commit()

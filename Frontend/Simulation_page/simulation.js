@@ -20,6 +20,7 @@ const simulationInterval = setInterval(() => {
 }, 1000 * config.speed); // Advance simulation every second
 */
 
+
 async function create_top_line(config){
       // Create the left section (d-flex)
   
@@ -112,9 +113,42 @@ async function show_robot(robot){
         iconContainer.appendChild(single_icon);
     });
 
+    // Location Info side
     const locationDestination = document.createElement('div');
     locationDestination.classList.add('location-destination');
 
+    /*
+    // Create the select element
+    const dropdown = document.createElement("select");
+    dropdown.id = "objectDropdown"; // Set an ID
+    dropdown.classList.add('location');
+
+    // Sample objects
+    const stations = [
+      { trias_id: 1, name: "Object A", pos: [1,1] },
+      { trias_id: 2, name: "Object B" , pos: [1,1]},
+      { trias_id: 3, name: "Object C" , pos: [3,3]}
+  ];
+
+    // Populate the dropdown
+    stations.forEach(obj => {
+        const option = document.createElement("option");
+        option.value = JSON.stringify(obj.pos)//obj.trias_id; // Store object ID as value
+        option.textContent = obj.name; // Show object name
+        dropdown.appendChild(option);
+    });
+
+    
+      dropdown.addEventListener("change", async () => {
+        // Convert dropdown value to array or number (assuming "1,1" format)
+        robot.start_pos = JSON.parse(dropdown.value );
+        console.log(robot.package_list);
+        const json_robot = robot_toJSON(robot);
+
+        patchRobot(robot.id, json_robot);
+
+    });
+    */
     // Create the location div
     const location = document.createElement('div');
     location.classList.add('location');
@@ -144,6 +178,7 @@ async function show_robot(robot){
     destination.appendChild(destinationImage);
 
     // Append the location and destination divs to the main container
+    //locationDestination.appendChild(dropdown);
     locationDestination.appendChild(location);
     locationDestination.appendChild(destination);
 
@@ -153,7 +188,9 @@ async function show_robot(robot){
     info_sheet.appendChild(locationDestination)
 
 
+
 }
+
 
 
 // creating the right Robot list
@@ -196,7 +233,6 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     const config_top_line = await get_config();
     create_top_line(config_top_line);
-
 
     // Get the parent div and add robots to the DOM
     const roboterListDiv = document.getElementById('roboter-list');
@@ -251,6 +287,7 @@ async function getRobotsData() {
           position: robot.position,
           energy: robot.energy,
           numb_packages: robot.numb_packages,
+          package_list: robot.package_list,
           status: robot.status,
           dest: robot.dest,
           speed: robot.speed,
