@@ -160,7 +160,8 @@ async function show_robot(robot){
 
     // Create the paragraph for the location text
     const locationText = document.createElement('p');
-    locationText.textContent = JSON.stringify(robot.start_pos); // Set location text
+    const start_pos = JSON.parse(robot.start_pos)
+    locationText.textContent = JSON.stringify(start_pos.name); // Set location text
     location.appendChild(locationText);
 
     // Create the destination div
@@ -169,7 +170,8 @@ async function show_robot(robot){
 
     // Create the paragraph for the destination text
     const destinationText = document.createElement('p');
-    destinationText.textContent = JSON.stringify(robot.dest); // Set destination text
+    const dest = JSON.parse(robot.dest)
+    destinationText.textContent = JSON.stringify(dest.name); // Set destination text
     destination.appendChild(destinationText);
 
     // Create the image for the destination
