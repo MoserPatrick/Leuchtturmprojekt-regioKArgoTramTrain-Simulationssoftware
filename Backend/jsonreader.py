@@ -104,11 +104,11 @@ for i in range (len(trias_id_list)):
                 sorted_stationlist[i][j] = element
 
 
-for list in sorted_stationlist:
+'''for list in sorted_stationlist:
     print("---------------------------------------------------------------------------------")
     for element in list:
         print(element.get_name())
-
+'''
             
 # Beispiel-Koordinaten
 lat1, lon1 = 49.0019896339322, 8.45542854438636  
@@ -120,33 +120,37 @@ lat1 = 0
 long1 = 0
 lat2 = 0
 long2 = 0
-i = 10
-for j in range(len(sorted_stationlist[i])-1):
-    lat1 = float(sorted_stationlist[i][j].get_lat())
-    long1 = float(sorted_stationlist[i][j].get_long())
-    lat2 = float(sorted_stationlist[i][j+1].get_lat())
-    long2 = float(sorted_stationlist[i][j+1].get_long())
-    print(sorted_stationlist[i][j].get_name())
-    print(lat1,long1)
-    print("\n")
-    print(sorted_stationlist[i][j+1].get_name())
-    print(lat2,long2)
-    
-    distance = haversine(lat1, long1, lat2, long2)
-    print(f"Die Distanz zwischen den Punkten beträgt: {distance:.2f} km")
-    time = 0
-    if i <= 7:
-        #Straßenbahn
-        geschw = 19,8
-        time = (distance/geschw)*60
-    else:
-        #Stadtbahn
-        geschw = 30
-        time = (distance/geschw)*60
-    print (time)
-    print("---------------------------------------------------------")
-    sum = sum + distance
-print(sum)
+for i in range (len(sorted_stationlist)):
+    for j in range(len(sorted_stationlist[i])-1):
+        lat1 = float(sorted_stationlist[i][j].get_lat())
+        long1 = float(sorted_stationlist[i][j].get_long())
+        lat2 = float(sorted_stationlist[i][j+1].get_lat())
+        long2 = float(sorted_stationlist[i][j+1].get_long())
+        print(sorted_stationlist[i][j].get_name())
+        #print(lat1,long1)
+        #print("\n")
+        #print(sorted_stationlist[i][j+1].get_name())
+        #print(lat2,long2)
+        
+        distance = haversine(lat1, long1, lat2, long2)
+        #print(f"Die Distanz zwischen den Punkten beträgt: {distance:.2f} km")
+        time = 0
+        if i <= 7:
+            #Straßenbahn
+            geschw = 19.8
+            time = distance/geschw*60
+        else:
+            #Stadtbahn
+            geschw = 30
+            time = distance/geschw*60
+        sorted_stationlist[i][j].add_connection(sorted_stationlist[i][j+1], time, numbers[i])
+        print(sorted_stationlist[i][j].get_connection())
+        for h in range (len(sorted_stationlist[i][j].get_connection())):
+            print (sorted_stationlist[i][j].get_connection()[h][0].get_name())
+        print("---------------------------------------------------------")
+        sum = sum + distance
+    print(sum)
+
 #19,8 km/h straßenbahnm 0-7
 #30 km/h stadtbahnen 8-17
                 

@@ -32,7 +32,7 @@ class Station:
 
 
     def add_connection(self, target_station, time, line) :
-        self.connections.append((target_station, time, line))
+        self.connections.append([target_station, time, line])
 
     def add_line(self, line):
         self.lines.append(line)

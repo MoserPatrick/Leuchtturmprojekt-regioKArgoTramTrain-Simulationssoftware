@@ -15,8 +15,8 @@ def haversine(lat1, lon1, lat2, lon2):
     delta_lon = lon2_rad - lon1_rad
     
     # Haversine-Formel
-    a = math.sin(delta_lat / 2)**2 + math.cos(lat1_rad) * math.cos(lat2_rad) * math.sin(delta_lon / 2)**2
-    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+    a = float(math.sin(delta_lat / 2)**2 + math.cos(lat1_rad) * math.cos(lat2_rad) * math.sin(delta_lon / 2)**2)
+    c = float(2 * math.atan2(math.sqrt(a), math.sqrt(1 - a)))
     
     # Distanz berechnen
     distance = R * c
