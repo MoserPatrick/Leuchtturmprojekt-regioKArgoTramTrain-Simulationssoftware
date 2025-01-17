@@ -5,6 +5,7 @@ from package import Package
 import sqlite3
 import json
 import requests
+import random
 
 
 class Robot:
@@ -121,10 +122,15 @@ class Robot:
         del self.package_list[0]
         if (self.package_list[0]):
             self.findBestPath
+            self.status = "Delivering"
         else:
             self.returnHome
-        self.status = "Driving"
-
+            self.status = "Returning Home"
+        # 10% chance fopr the Package not being picked up.
+        chance = random.uniform(0.0,100.0)
+        if( chance > 90.0):
+            print("Package was not picked up!")
+        
         json_robot = self.to_dict()
         requests.patch(url_patch_robot, json=json_robot)
         pass
