@@ -6,9 +6,11 @@ from package import Package
 from Station  import Station
 from Robot import Robot
 from init_robot import init_robot
+from flask_socketio import SocketIO, emit
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
+socketio = SocketIO(app, cors_allowed_origins="http://localhost:5500")
 
 # helper Functions
 def fetch_data_from_db(query, params=()):
@@ -247,6 +249,11 @@ def update_robots(robot_id):
         speed = data.get('speed')
         weight = data.get('weight')
         start_pos = data.get('start_pos')
+
+        updated_robot = Robot(id=id, position=position, energy=energy, numb_packages=numb_packages, package_list=package_list, status=status, dest=dest, speed=speed, weight=weight, start_pos=start_pos)
+        dict_robot = updated_robot.to_dict()
+         # Emit a message to all connected clients
+        socketio.emit('robot_updated', dict_robot)
 
         # Validate that required fields are provided
         required_fields = ['id', 'position', 'energy', 'numb_packages', 'package_list', 'status', 'dest', 'speed', 'weight', 'start_pos']
@@ -490,4 +497,5 @@ def start_sim():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    #app.run(debug=True)
+    socketio.run(app, debug=True)

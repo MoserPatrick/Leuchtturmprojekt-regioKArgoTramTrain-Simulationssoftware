@@ -68,6 +68,7 @@ async function create_top_line(config){
 
 async function show_robot(robot){
     console.log(`Button for robot ${robot.id} clicked`);
+    console.log("type"+ typeof(robot));
     // creating elements to showcase the robots data
     // remove past containers
     const existing_info_icons = document.querySelector('.info-icons');
@@ -117,6 +118,7 @@ async function show_robot(robot){
     const locationDestination = document.createElement('div');
     locationDestination.classList.add('location-destination');
 
+    // Select station in drop down menu
     /*
     // Create the select element
     const dropdown = document.createElement("select");
@@ -149,6 +151,7 @@ async function show_robot(robot){
 
     });
     */
+    
     // Create the location div
     const location = document.createElement('div');
     location.classList.add('location');
@@ -193,6 +196,25 @@ async function show_robot(robot){
 
 }
 
+// Establish a WebSocket connection to the backend
+const socket = io('http://127.0.0.1:5500');
+
+// Listen for updates from the server
+socket.on('robot_updated', (updatedRobot) => {
+  const robotData = {
+    id: updatedRobot.id,
+    position: updatedRobot.position,
+    energy: updatedRobot.energy,
+    numb_packages: updatedRobot.numb_packages,
+    package_list: updatedRobot.package_list,
+    status: updatedRobot.status,
+    dest: updatedRobot.dest,
+    speed: updatedRobot.speed,
+    weight: updatedRobot.weight,
+    start_pos: updatedRobot.start_pos
+};
+  show_robot(robotData);
+});
 
 
 // creating the right Robot list

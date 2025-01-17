@@ -79,8 +79,7 @@ class Robot:
         if(self.energy > capacity):
             self.energy = capacity
         time.sleep((capacity - self.energy) * sim_speed)
-        #self.energy = capacity
-        self.energy = 1000.0
+        self.energy = capacity
         url_patch_robot = f"http://127.0.0.1:5000/robot/{self.id}"
         json_robot = self.to_dict()
         requests.patch(url_patch_robot, json=json_robot)
@@ -120,7 +119,8 @@ class Robot:
 
         time.sleep(deliver_time)
         del self.package_list[0]
-        if (self.package_list[0]):
+        self.numb_packages -= 1
+        if (self.numb_packages > 0):
             self.findBestPath
             self.status = "Delivering"
         else:
@@ -140,12 +140,16 @@ class Robot:
         loading_time = 10
         url_patch_robot = f"http://127.0.0.1:5000/robot/{self.id}"
         self.status = "Loading"
+        url_get_config = "http://127.0.0.1:5000/config"
+        response = requests.get(url_get_config)
+        json_config = json.loads(response.text)
 
         json_robot = self.to_dict()
         requests.patch(url_patch_robot, json=json_robot)
 
         time.sleep(loading_time)
-        self.package_list = package_creator.create_package(self.numb_packages, self.package_list)
+        self.package_list = package_creator.create_package(json_config['max_packages'], self.package_list)
+        self.numb_packages = json_config['max_packages']
         self.findBestPath()
         self.status = "Driving"
 
