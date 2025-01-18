@@ -197,7 +197,11 @@ async function show_robot(robot){
 }
 
 // Establish a WebSocket connection to the backend
-const socket = io('http://127.0.0.1:5500');
+const socket = io('http://127.0.0.1:5000');
+
+socket.on("connect", () => {
+  console.log("Connected to Flask-SocketIO server!");
+});
 
 // Listen for updates from the server
 socket.on('robot_updated', (updatedRobot) => {

@@ -10,8 +10,13 @@ from flask_socketio import SocketIO, emit
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
-socketio = SocketIO(app, cors_allowed_origins="http://localhost:5500")
+socketio = SocketIO(app, cors_allowed_origins="*")
 
+
+@socketio.on("connect")
+def handle_connect():
+    print("Client connected")
+    socketio.send("Welcome to the server!")
 # helper Functions
 def fetch_data_from_db(query, params=()):
      # Connect to the SQLite database
