@@ -150,9 +150,15 @@ for i in range (len(sorted_stationlist)):
         #print("---------------------------------------------------------")
         sum = sum + distance
     #print(sum)
+
+
+
+
+
 inverted_sorted_stationlist = []
 for i in range (len(sorted_stationlist)):
     inverted_sorted_stationlist.append(sorted_stationlist[i][::-1])
+    
 
 for i in range (len(inverted_sorted_stationlist)):
     for j in range(len(inverted_sorted_stationlist[i])-1):
@@ -160,14 +166,13 @@ for i in range (len(inverted_sorted_stationlist)):
         long1 = float(inverted_sorted_stationlist[i][j].get_long())
         lat2 = float(inverted_sorted_stationlist[i][j+1].get_lat())
         long2 = float(inverted_sorted_stationlist[i][j+1].get_long())
-        print(sorted_stationlist[i][j].get_name())
+        print(inverted_sorted_stationlist[i][j].get_name())
         #print(lat1,long1)
         #print("\n")
-        #print(sorted_stationlist[i][j+1].get_name())
+        #print(inverted_sorted_stationlist[i][j+1].get_name())
         #print(lat2,long2)
-        
         distance = haversine(lat1, long1, lat2, long2)
-        #print(f"Die Distanz zwischen den Punkten beträgt: {distance:.2f} km")
+        #print(f"Die Distanz zwischen den Punkten beträgt: {distance:.2f} km")    
         time = 0
         if i <= 7:
             #Straßenbahn
@@ -177,12 +182,14 @@ for i in range (len(inverted_sorted_stationlist)):
             #Stadtbahn
             geschw = 30
             time = distance/geschw*60
+
+
         inverted_sorted_stationlist[i][j].add_connection(inverted_sorted_stationlist[i][j+1], time, numbers[i])
         print(inverted_sorted_stationlist[i][j].get_connection())
         for h in range (len(inverted_sorted_stationlist[i][j].get_connection())):
             print (inverted_sorted_stationlist[i][j].get_connection()[h][0].get_name())
-        print("---------------------------------------------------------")
-        sum = sum + distance
+        print("----------------------------------------")
+    sum = sum + distance
 
 #19,8 km/h straßenbahnm 0-7
 #30 km/h stadtbahnen 8-17
