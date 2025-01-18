@@ -245,41 +245,72 @@ def update_robots(robot_id):
         
         # Extract individual fields from the JSON data
         id = data.get('id')
-        position = data.get('position')
+         # Convert position, dest, and start_pos from dict to Station objects
+        position_data = data.get('position')
+        position = Station.from_dict(position_data) if position_data else None
         energy = data.get('energy')
         numb_packages = data.get('numb_packages')
-        package_list = data.get('package_list')
+        # Ensure package_list is converted to Package objects
+        package_list_data = data.get('package_list', [])
+        package_list = [Package.from_dict(pkg) for pkg in package_list_data]  # Convert each dictionary to a Package object
+    
         status = data.get('status')
-        dest = data.get('dest')
+        # Convert dest from dict to Station object
+        dest_data = data.get('dest')
+        dest = Station.from_dict(dest_data) if dest_data else None
         speed = data.get('speed')
         weight = data.get('weight')
-        start_pos = data.get('start_pos')
+        # Convert start_pos from dict to Station object
+        start_pos_data = data.get('start_pos')
+        start_pos = Station.from_dict(start_pos_data) if start_pos_data else None
+
+        # Now serialize position, dest, and start_pos to strings (if they are objects)
+        position_json = json.dumps(position.to_dict_s()) if position else None
+        dest_json = json.dumps(dest.to_dict_s()) if dest else None
+        start_pos_json = json.dumps(start_pos.to_dict_s()) if start_pos else None
 
         updated_robot = Robot(id=id, position=position, energy=energy, numb_packages=numb_packages, package_list=package_list, status=status, dest=dest, speed=speed, weight=weight, start_pos=start_pos)
+       
         dict_robot = updated_robot.to_dict()
          # Emit a message to all connected clients
+        print("before emit")
         socketio.emit('robot_updated', dict_robot)
-
+        print("after emit")
         # Validate that required fields are provided
         required_fields = ['id', 'position', 'energy', 'numb_packages', 'package_list', 'status', 'dest', 'speed', 'weight', 'start_pos']
         missing_fields = [field for field in required_fields if not data.get(field)]
         if missing_fields:
             return jsonify({"error": f"Missing required fields: {', '.join(missing_fields)}"}), 400
         # Convert the 'package_list' (which is a list of dictionaries) to Package objects
-        package_list = [Package(p['weight'], p['width'], p['height'], p['length'], p['destination'],) for p in data['package_list']]
+        #package_list = [Package(p['weight'], p['width'], p['height'], p['length'], p['destination'],) for p in data['package_list']]
         # Serialize the package_list to a JSON string
         package_list_json = json.dumps([package.to_dict_p() for package in package_list])
         data["package_list"] = package_list_json
+
 
         # Build the update query based on the provided data
         updates = []
         parameters = []
 
         # Only update fields that are provided in the request
+        # Only update fields that are provided in the request
         for field in required_fields:
             if field in data:
-                updates.append(f"{field} = ?")
-                parameters.append(data[field])
+                if field == 'package_list':
+                    updates.append(f"{field} = ?")  # We set package_list to JSON
+                    parameters.append(package_list_json)
+                elif field == 'position':
+                    updates.append(f"{field} = ?")  # We set position to serialized JSON
+                    parameters.append(position_json)
+                elif field == 'dest':
+                    updates.append(f"{field} = ?")  # We set dest to serialized JSON
+                    parameters.append(dest_json)
+                elif field == 'start_pos':
+                    updates.append(f"{field} = ?")  # We set start_pos to serialized JSON
+                    parameters.append(start_pos_json)
+                else:
+                    updates.append(f"{field} = ?")
+                    parameters.append(data[field])
 
         # Add the condition to update the robot by its id
         updates_query = ', '.join(updates)

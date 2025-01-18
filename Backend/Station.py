@@ -16,19 +16,24 @@ class Station:
             "lines": self.lines,
             "lat": self.lat,
             "long": self.long,
-            "connection": self.connections
+            "connections": self.connections
         }
     
     @classmethod
     def from_dict(cls, data):
-        return cls(
-            name=data['name'],
-            trias_id = data['tris_id'],
-            lines = data['lines'],
-            lat=data['lat'],
-            long = data['long'],
-            connection = data['connection']
+        # Create instance with required parameters only
+        station = cls(
+            name=data.get('name'),
+            trias_id=data.get('trias_id'),
+            lat=data.get('lat'),
+            long=data.get('long')
         )
+
+        # Assign lists separately to avoid passing unknown arguments
+        station.lines = data.get('lines', [])  # Default to an empty list if missing
+        station.connections = data.get('connections', [])  # Default to an empty list
+
+        return station
 
 
     def add_connection(self, target_station, time, line) :

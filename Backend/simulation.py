@@ -9,39 +9,9 @@ class Simulation:
 
     def main():
 
-        url_get_config = f"http://127.0.0.1:5000/config"
-        response_config = requests.get(url_get_config)
-        config = json.loads(response_config.text)
-        
-        # Create Robots
-        # Configurated Data 
-        numb_robots = config['numb_robots'] # LOAD: load the config data
-        max_packages = config['max_packages'] # LOAD: load the config number of Packages
-        battery = config['battery']
-        capacity = config['capacity']
-        sim_speed = config['sim_speed']
-        usage = config['usage']
-
-        # Robot Data
-        start_pos = "(100, 50)" # LOAD: load the real starting Position (Station)
-        pos = start_pos
-        energy = battery # LOAD: from config
-        numb_packages = max_packages
-        package_list = []
-        status = "idle"
-        dest = "Station"
-        weight = 80.0 # LOAD: load form config
-        speed = 2 - (weight/100)
-
-        # Arrays
-        stations = [] # LOAD: List of all Stations
-        robots = []
-        url = "http://127.0.0.1:5000/robots"
-        
-
         # HELPING CODE
         # example for getting Robot from Database
-        robot_id = 2
+        robot_id = 1
         url_get_robot = f"http://127.0.0.1:5000/robot/{robot_id}"
         response = requests.get(url_get_robot)
         if response.status_code != 200:

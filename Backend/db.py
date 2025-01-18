@@ -1,4 +1,5 @@
 import sqlite3
+import json
 
 #define connection and cursor
 connection = sqlite3.connect('simulation.db')
@@ -47,8 +48,12 @@ cursor.execute(command3)
 # add to config
 #cursor.execute("INSERT INTO configuration VALUES (3, 3, 100.0, 100.0, 75.5, 1.0)")
 #cursor.execute("INSERT INTO robots VALUES (1, 'yes', 100.0, 2, 'packages', 'waiting', 'here', 1.0, 100.0, 'start')")
-cursor.execute("INSERT INTO stations VALUES ('name', 123, 'lines', 1.1, 2.2, 'connections')")
-cursor.execute("INSERT INTO stations VALUES ('name2', 123, 'lines', 1.1, 2.2, 'connections')")
+lines = ["line3", "line4"]
+connections = [['station1', 'station2'], ['station3', 'station4'], ['station5']]
+lines_json = json.dumps(lines)  # Convert lines list to a JSON string
+connections_json = json.dumps(connections)  # Convert 2D list to a JSON string
+cursor.execute("INSERT INTO stations VALUES ('name', 123, ?, 1.1, 2.2, ?)", (lines_json, connections_json))
+cursor.execute("INSERT INTO stations VALUES ('name2', 123, ?, 1.1, 2.2, ?)", (lines_json, connections_json))
 connection.commit()
 
 cursor.execute("SELECT * FROM configuration")
