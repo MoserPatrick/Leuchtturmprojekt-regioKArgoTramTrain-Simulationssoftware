@@ -72,7 +72,43 @@ def insert_robot(robot):
     conn.close()
 
 def create_robot(data):
-    # Extract individual fields from the JSON data
+        # Get the JSON data from the request
+        data = request.get_json()
+        
+        # Get the JSON data from the request
+        data = request.get_json()
+        
+        # Extract individual fields from the JSON data
+        id = data.get('id')
+         # Convert position, dest, and start_pos from dict to Station objects
+        position_data = data.get('position')
+        print("bnefore StaTION")
+        json_position = json.loads(position_data)
+        position = Station.from_dict(json_position) if json_position else None
+        print("after station")
+        energy = data.get('energy')
+        numb_packages = data.get('numb_packages')
+        # Ensure package_list is converted to Package objects
+        package_list_data = data.get('package_list', [])
+        json_package_list = json.loads(package_list_data)
+        print("before package")
+        package_list = [Package.from_dict(pkg) for pkg in json_package_list]  # Convert each dictionary to a Package object
+        print("after pakcage")
+        status = data.get('status')
+        # Convert dest from dict to Station object
+        dest_data = data.get('dest')
+        json_dest = json.loads(dest_data)
+        dest = Station.from_dict(json_dest) if json_dest else None
+        speed = data.get('speed')
+        weight = data.get('weight')
+        # Convert start_pos from dict to Station object
+        start_pos_data = data.get('start_pos')
+        json_start_pos= json.loads(start_pos_data)
+        start_pos = Station.from_dict(json_start_pos) if json_start_pos else None
+
+        updated_robot = Robot(id=id, position=position, energy=energy, numb_packages=numb_packages, package_list=package_list, status=status, dest=dest, speed=speed, weight=weight, start_pos=start_pos)
+        return updated_robot
+        '''# Extract individual fields from the JSON data
         id = data.get('id')
         position = data.get('position')
         energy = data.get('energy')
@@ -94,7 +130,7 @@ def create_robot(data):
 
         # Create the Robot object
         return Robot(id=id, position=position, energy=energy, numb_packages=numb_packages, package_list=package_list, status=status, dest=dest, speed=speed, weight=weight, start_pos=start_pos)
-        
+        '''
 
 @app.route('/config', methods=['GET'])
 def get_config():
@@ -440,11 +476,14 @@ def charge_robot():
         # Get JSON data from the request
         data = request.get_json()
         robot = create_robot(data)
+        print("------------------------")
         robot.charge()
 
 @app.route('/robot/wait', methods=['POST'])
 def wait_robot():
+    print("here")
     if request.is_json:
+        print("cirrect")
         # Get JSON data from the request
         data = request.get_json()
         robot = create_robot(data)

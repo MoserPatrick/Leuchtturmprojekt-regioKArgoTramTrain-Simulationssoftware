@@ -189,6 +189,11 @@ async function show_robot(robot){
 
     // Append the icon container other parent element called "info-sheet"
     const info_sheet = document.getElementById('info-sheet');
+    const test = document.createElement('button');
+    test.classList.add('destination');
+
+    test.addEventListener('click', () => test_button(robot));
+    info_sheet.appendChild(test)
     info_sheet.appendChild(iconContainer);  // Or any other container
     info_sheet.appendChild(locationDestination)
 
@@ -233,9 +238,16 @@ function create_robot_element(robot) {
 
   // (Optional) Add event listener
   button_robot.addEventListener('click', () => show_robot(robot));
+
   return button_robot
   }
   
+async function test_button(robot){
+  console.log("clicked test");
+  const url_test = 'http://127.0.0.1:5000/robot/charge';
+  await Robot_method(robot, url_test);
+}
+
 async function cancel_button(){
   console.log("deleting!!");
     // reset Time
@@ -270,6 +282,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     robot_list.forEach(robot => {
       const robot_element = create_robot_element(robot)
       roboterListDiv.appendChild(robot_element);
+      
     });
     
   });
