@@ -12,7 +12,7 @@ class jsonreader:
     long = []
     coordinates = []
     #opens KVV Stops File
-    f = open('jsonFiles/KVV_Stops_v4.json')
+    f = open('Backend/jsonFiles/KVV_Stops_v4.json')
     data = json.load(f)
     for item in data:
         names.append(item['name'])
@@ -28,7 +28,7 @@ class jsonreader:
             print(f"Warnung: 'coordPositionWGS84' fehlt bei der Station {item.get('name', 'Unbekannt')}")
     for i in range(len(names)):
         #print(trias_id[i])
-        stationlist.append(Station(names[i], trias_id[i], coordinates[i]["lat"], coordinates[i]["long"]))
+        stationlist.append(Station.Station(names[i], trias_id[i], coordinates[i]["lat"], coordinates[i]["long"]))
 
 
         

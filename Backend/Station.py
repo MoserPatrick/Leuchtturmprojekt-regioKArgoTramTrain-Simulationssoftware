@@ -6,7 +6,7 @@ class Station:
         self.lines = []
         self.lat = lat
         self.long = long
-        #self.connections = [] # Liste von Verbindungen (Zielstation, Gewicht, Linie)
+        self.connections = [] # Liste von Verbindungen (Zielstation, Gewicht, Linie)
 
     def to_dict_s(self):
         # Convert Package object to a dictionary
