@@ -84,15 +84,16 @@ async function show_robot(robot){
     // create big container called "info-icons"
     const iconContainer = document.createElement('div');
     iconContainer.classList.add('info-icons');
+    iconContainer.id = `icon-${robot.id}`;
 
     // Define the icon data (image sources and the text)
     const icons = [
-        { src: 'images/Robot.png', text: robot.id },
-        { src: 'images/box.png', text: robot.numb_packages },
-        { src: 'images/bigbattery.png', text: robot.energy },
-        { src: 'images/Delivering.png', text: robot.status },
-        { src: 'images/Speed.png', text: robot.speed},
-        { src: 'images/Weight.png', text: robot.weight}
+      { src: 'images/Robot.png', text: robot.id, id: `robot-id-${robot.id}` },
+      { src: 'images/box.png', text: robot.numb_packages, id: `packages-${robot.id}` },
+      { src: 'images/bigbattery.png', text: robot.energy, id: `energy-${robot.id}` },
+      { src: 'images/Delivering.png', text: robot.status, id: `status-${robot.id}` },
+      { src: 'images/Speed.png', text: robot.speed, id: `speed-${robot.id}` },
+      { src: 'images/Weight.png', text: robot.weight, id: `weight-${robot.id}` }
     ];
 
     // Loop through the icon data to create list items dynamically
@@ -117,6 +118,7 @@ async function show_robot(robot){
     // Location Info side
     const locationDestination = document.createElement('div');
     locationDestination.classList.add('location-destination');
+    locationDestination.id = `locdest-${robot.id}`;
 
     // Select station in drop down menu
     /*
@@ -163,6 +165,7 @@ async function show_robot(robot){
 
     // Create the paragraph for the location text
     const locationText = document.createElement('p');
+    locationText.id = `location-${robot.id}`;
     const start_pos = JSON.parse(robot.start_pos)
     locationText.textContent = JSON.stringify(start_pos.name); // Set location text
     location.appendChild(locationText);
@@ -175,6 +178,7 @@ async function show_robot(robot){
     const destinationText = document.createElement('p');
     const dest = JSON.parse(robot.dest)
     destinationText.textContent = JSON.stringify(dest.name); // Set destination text
+    destinationText.id = `destination-text-${robot.id}`;
     destination.appendChild(destinationText);
 
     // Create the image for the destination
@@ -201,6 +205,39 @@ async function show_robot(robot){
 
 }
 
+
+function update_robot(robot_id, updated_fields) {
+  console.log(`Updating robot ${robot_id} with attributes`, updated_fields);
+  const existing_info_icons = document.querySelector('.info-icons');
+    // If it exists, remove it
+    if (existing_info_icons) {
+       if(existing_info_icons.id != `icon-${robot.id}`){
+          return
+       }   
+    }
+    const existinglocDest = document.querySelector('.location-destination');
+    // If it exists, remove it
+    if (existinglocDest) {
+      if(existinglocDest.id != `locdest-${robot.id}`){
+        return
+     }   
+    }
+    for (const [key, value] of Object.entries(updated_fields)) {
+      const elementId = `${key}-${robot_id}`;
+      const element = document.getElementById(elementId);
+
+      if (element) {
+          if (element.tagName === 'P') {
+              element.textContent = value; // Update text content for paragraphs
+          } else {
+              console.warn(`Unhandled element type for ${elementId}`);
+          }
+      } else {
+          console.warn(`Element with ID ${elementId} not found.`);
+      }
+  }
+}
+
 // Establish a WebSocket connection to the backend
 const socket = io('http://127.0.0.1:5000');
 
@@ -209,20 +246,10 @@ socket.on("connect", () => {
 });
 
 // Listen for updates from the server
-socket.on('robot_updated', (updatedRobot) => {
-  const robotData = {
-    id: updatedRobot.id,
-    position: updatedRobot.position,
-    energy: updatedRobot.energy,
-    numb_packages: updatedRobot.numb_packages,
-    package_list: updatedRobot.package_list,
-    status: updatedRobot.status,
-    dest: updatedRobot.dest,
-    speed: updatedRobot.speed,
-    weight: updatedRobot.weight,
-    start_pos: updatedRobot.start_pos
-};
-  show_robot(robotData);
+socket.on('robot_updated', (robot_id, updated_attributes) => {
+
+
+  update_robot(robot_id, updated_attributes);
 });
 
 

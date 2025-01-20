@@ -345,26 +345,30 @@ def update_robots(robot_id):
         # Only update fields that are provided in the request
         for field in required_fields:
             if field in data:
+                value = None
                 if field == 'package_list':
                     updates.append(f"{field} = ?")  # We set package_list to JSON
                     parameters.append(package_list_json)
-                    emit_data.append(package_list_json)
+                    value.append(package_list_json)
                 elif field == 'position':
                     updates.append(f"{field} = ?")  # We set position to serialized JSON
                     parameters.append(position_json)
-                    emit_data.append(position_json)
+                    value.append(position_json)
                 elif field == 'dest':
                     updates.append(f"{field} = ?")  # We set dest to serialized JSON
                     parameters.append(dest_json)
-                    emit_data.append(dest_json)
+                    value.append(dest_json)
                 elif field == 'start_pos':
                     updates.append(f"{field} = ?")  # We set start_pos to serialized JSON
                     parameters.append(start_pos_json)
-                    emit_data.append(start_pos_json)
+                    value.append(start_pos_json)
                 else:
                     updates.append(f"{field} = ?")
                     parameters.append(data[field])
-                    emit_data.append(data[field])
+                    value.append(data[field])
+                if emit_data is not None:
+                    updates.append(f"{field} = ?")
+                    emit_data[field] = value  # Add to the emit_data dictionary
 
         # Add the condition to update the robot by its id
         updates_query = ', '.join(updates)
@@ -381,7 +385,7 @@ def update_robots(robot_id):
 
         # Emit a message to all connected clients
         print("before emit")
-        socketio.emit('robot_updated', emit_data)
+        socketio.emit('robot_updated', {'robot_id': robot_id, 'updated_fields': emit_data})
         print("after emit")
 
         #update_robot(robot,updates_query, parameters)
@@ -546,7 +550,7 @@ def get_all_stations():
             'lines': row[2],
             'lat': row[3],
             'long': row[4],
-            'connections': row[5]
+            #'connections': row[5]
         }
         stations.append(station)
 
@@ -571,7 +575,7 @@ def get_station(trias_id):
         'lines': json.loads(data[2]) if data[2] else [],
         'lat': data[3],
         'long': data[4],
-        'connections': json.loads(data[5]) if data[5] else []
+        #'connections': json.loads(data[5]) if data[5] else []
     }
     print(station)
     station_json = json.dumps(station)

@@ -7,7 +7,7 @@ class Station:
         self.lines = []
         self.lat = lat
         self.long = long
-        self.connections = [] # Liste von Verbindungen (Zielstation, Gewicht, Linie)
+        #self.connections = [] # Liste von Verbindungen (Zielstation, Gewicht, Linie)
 
     def to_dict_s(self):
         # Convert Package object to a dictionary
@@ -34,7 +34,7 @@ class Station:
 
         #station.connections = data.get('connections', [])  # Default to an empty list
 
-    @classmethod
+    '''@classmethod
     def from_dict_s(cls, data):
         # Create instance with required parameters only
         station = cls(
@@ -49,7 +49,7 @@ class Station:
         
         #station.connections = data.get('connections', [])  # Default to an empty list
 
-        return station
+        return station'''
 
 
     def add_connection(self, target_station, time, line) :

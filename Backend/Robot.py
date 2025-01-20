@@ -53,8 +53,8 @@ class Robot:
         dict_package_list = []
         for pkg in self.package_list:
             print(type(pkg))
-            print(pkg.destination.connections)
-            print(type(pkg.destination.connections))
+            #print(pkg.destination.connections)
+            #print(type(pkg.destination.connections))
             dict_package = pkg.to_dict_p()
             dict_package_list.append(dict_package)
 
