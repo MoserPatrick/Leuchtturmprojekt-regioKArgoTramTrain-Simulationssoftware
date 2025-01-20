@@ -1,6 +1,8 @@
 import json
 import Station
 from harversine import haversine
+import heapq
+import math
 
 stationlist = []
 names = []
@@ -199,4 +201,50 @@ for i in range (len(inverted_sorted_stationlist)):
 #19,8 km/h straßenbahnm 0-7
 #30 km/h stadtbahnen 8-17
                 
+def dijkstra(start_id, end_id, stationlist):
+    import heapq
+    import math
 
+    # Initialisierung
+    distances = {station.get_name(): math.inf for station in stationlist}
+    previous_nodes = {station.get_name(): None for station in stationlist}
+    distances[start_id] = 0
+    pq = [(0, start_id)]  # Prioritätswarteschlange (Distanz, Station)
+
+    # Station-ID-Mapping
+    station_map = {station.get_name(): station for station in stationlist}
+
+    while pq:
+        current_distance, current_id = heapq.heappop(pq)
+        current_station = station_map[current_id]
+
+        # Abbruchbedingung
+        if current_id == end_id:
+            break
+
+        # Verarbeite Verbindungen
+        for neighbor, weight, line in current_station.get_connection():
+            neighbor_id = neighbor.get_name()
+            distance = current_distance + weight
+            if distance < distances[neighbor_id]:
+                distances[neighbor_id] = distance
+                previous_nodes[neighbor_id] = current_id
+                heapq.heappush(pq, (distance, neighbor_id))
+
+    # Kürzesten Pfad rekonstruieren
+    path = []
+    current_id = end_id
+    while current_id is not None:
+        path.insert(0, current_id)
+        current_id = previous_nodes[current_id]
+
+    return path, distances[end_id]
+
+
+# Beispiel: Start- und Endstation
+start_station_id = "Neureut-Heide"  # Beispielname einer Station
+end_station_id = "Rintheim"  # Beispielname einer anderen Station
+
+shortest_path, shortest_distance = dijkstra(start_station_id, end_station_id, stationlist)
+print("Kürzester Pfad:", shortest_path)
+print("Distanz in Minuten:", shortest_distance)

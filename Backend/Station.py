@@ -60,26 +60,3 @@ class Station:
     def get_long(self):
         return self.long
 
-def dijkstra(start_station, target_station):
-    pq = []
-    heapq.heappush(pq, (0, start_station))
-    distance = {start_station: 0}
-    previous = {start_station: None}
-
-    while pq:
-        timecost, current_station = heapq.heappop(pq)
-
-        if current_station == target_station:
-            path = []
-            while current_station:
-                path.append(current_station.name)
-                current_station = previous[current_station]
-            return timecost, path[::-1]
-
-        for neighbour, time, line in current_station.get_connection():
-            new_timecost = timecost + time
-            if neighbour not in distance or new_timecost < distance[neighbour]:
-                distance[neighbour] = new_timecost
-                previous[neighbour] = current_station
-                heapq.heappush(pq, (new_timecost, neighbour))
-    return float('int'), []
