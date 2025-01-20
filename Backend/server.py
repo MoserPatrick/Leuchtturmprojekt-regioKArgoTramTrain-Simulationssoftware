@@ -1,3 +1,6 @@
+
+import eventlet
+eventlet.monkey_patch()
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 import sqlite3
@@ -320,10 +323,7 @@ def update_robots(robot_id):
         updated_robot = Robot(id=id, position=position, energy=energy, numb_packages=numb_packages, package_list=package_list, status=status, dest=dest, speed=speed, weight=weight, start_pos=start_pos)
        
         dict_robot = updated_robot.to_dict()
-         # Emit a message to all connected clients
-        print("before emit")
-        socketio.emit('robot_updated', dict_robot)
-        print("after emit")
+        
         # Validate that required fields are provided
         required_fields = ['id', 'position', 'energy', 'numb_packages', 'package_list', 'status', 'dest', 'speed', 'weight', 'start_pos']
         missing_fields = [field for field in required_fields if not data.get(field)]
@@ -339,6 +339,7 @@ def update_robots(robot_id):
         # Build the update query based on the provided data
         updates = []
         parameters = []
+        emit_data = []
 
         # Only update fields that are provided in the request
         # Only update fields that are provided in the request
@@ -347,18 +348,23 @@ def update_robots(robot_id):
                 if field == 'package_list':
                     updates.append(f"{field} = ?")  # We set package_list to JSON
                     parameters.append(package_list_json)
+                    emit_data.append(package_list_json)
                 elif field == 'position':
                     updates.append(f"{field} = ?")  # We set position to serialized JSON
                     parameters.append(position_json)
+                    emit_data.append(position_json)
                 elif field == 'dest':
                     updates.append(f"{field} = ?")  # We set dest to serialized JSON
                     parameters.append(dest_json)
+                    emit_data.append(dest_json)
                 elif field == 'start_pos':
                     updates.append(f"{field} = ?")  # We set start_pos to serialized JSON
                     parameters.append(start_pos_json)
+                    emit_data.append(start_pos_json)
                 else:
                     updates.append(f"{field} = ?")
                     parameters.append(data[field])
+                    emit_data.append(data[field])
 
         # Add the condition to update the robot by its id
         updates_query = ', '.join(updates)
@@ -372,6 +378,11 @@ def update_robots(robot_id):
         cursor.execute(f'UPDATE robots SET {updates_query} WHERE id = ?', parameters)  # Use placeholders to avoid SQL injection
         conn.commit()
         conn.close()
+
+        # Emit a message to all connected clients
+        print("before emit")
+        socketio.emit('robot_updated', emit_data)
+        print("after emit")
 
         #update_robot(robot,updates_query, parameters)
         # Execute the update query
@@ -584,5 +595,5 @@ def start_sim():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
-    #socketio.run(app, debug=True)
+    #app.run(debug=True)
+    socketio.run(app, debug=True)
