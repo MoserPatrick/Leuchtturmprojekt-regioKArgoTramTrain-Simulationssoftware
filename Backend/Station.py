@@ -1,5 +1,4 @@
 import heapq
-from jsonreader import generate_stationlist
 class Station:
     def __init__(self, name, trias_id = None, lat = None, long = None) :
         self.name = name
