@@ -348,27 +348,23 @@ def update_robots(robot_id):
                 value = None
                 if field == 'package_list':
                     updates.append(f"{field} = ?")  # We set package_list to JSON
-                    parameters.append(package_list_json)
                     value.append(package_list_json)
                 elif field == 'position':
                     updates.append(f"{field} = ?")  # We set position to serialized JSON
-                    parameters.append(position_json)
                     value.append(position_json)
                 elif field == 'dest':
                     updates.append(f"{field} = ?")  # We set dest to serialized JSON
-                    parameters.append(dest_json)
                     value.append(dest_json)
                 elif field == 'start_pos':
                     updates.append(f"{field} = ?")  # We set start_pos to serialized JSON
-                    parameters.append(start_pos_json)
                     value.append(start_pos_json)
                 else:
                     updates.append(f"{field} = ?")
-                    parameters.append(data[field])
                     value.append(data[field])
-                if emit_data is not None:
-                    updates.append(f"{field} = ?")
-                    emit_data[field] = value  # Add to the emit_data dictionary
+
+                updates.append(f"{field} = ?")
+                emit_data[field] = value  # Add to the emit_data dictionary
+                parameters.extend(value)
 
         # Add the condition to update the robot by its id
         updates_query = ', '.join(updates)

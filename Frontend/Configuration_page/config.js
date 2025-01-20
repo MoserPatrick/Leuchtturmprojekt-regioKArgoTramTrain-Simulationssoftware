@@ -42,9 +42,9 @@ async function sendJSONStringWithPOST(url, jsonString) {
         const response = await fetch(url, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'  // This is crucial to tell the server we are sending JSON
+                'Content-Type': 'application/json'  
             },
-            body: jsonString  // Sending the raw JSON string
+            body: jsonString  
         });
 
         // Wait for the response and parse it as JSON
