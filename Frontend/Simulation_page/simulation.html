@@ -14,8 +14,8 @@
     <script src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
     <style>
       #map {
-        height: 1070px;
-        width: 100%; 
+        height: 1000px;
+        width: 100%;
       }
     </style>
   </head>
@@ -39,8 +39,8 @@
       <section class="right-side">
         <div class="container">
           <div class="row">
-            <div class="roboter-list" id = "roboter-list">
-              
+            <div class="roboter-list" id="roboter-list">
+              <!-- Hier können Infos über die Roboter angezeigt werden -->
             </div>
           </div>
         </div>
@@ -50,7 +50,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script>
-     
+      // Initialisiere die Karte
       const map = L.map('map').setView([49.0069, 8.4037], 13); // Karlsruhe coordinates
 
       // Add a base map
@@ -59,7 +59,7 @@
         attribution: '© OpenStreetMap contributors'
       }).addTo(map);
 
-      // Load GeoJSON file
+      // GeoJSON-Daten laden
       fetch('KVV_Lines_GeoJSON_v3.json')
         .then(response => response.json())
         .then(data => {
@@ -76,6 +76,53 @@
           });
         })
         .catch(error => console.error("Error loading GeoJSON:", error));
+
+      // ---- Neuer Abschnitt: Roboter-Animation ----
+      const robots = localStorage.getItem("robots") || 1; // Anzahl der Roboter aus config
+      const speed = localStorage.getItem("speed") || 1;   // Geschwindigkeit aus config
+
+      const robotMarkers = [];
+      const paths = [
+        // Beispielpfade für Roboter (können dynamisch durch Backend ersetzt werden)
+        [[49.0092, 8.3923], [49.0097, 8.4044], [48.9992, 8.4655], [49.0092, 8.3923]],
+        [[49.0069, 8.4037], [49.0150, 8.4050], [49.0200, 8.4200], [49.0069, 8.4037]],
+      ];
+
+      // Benutzerdefiniertes Icon erstellen
+      const customIcon = L.icon({
+        iconUrl: 'Robot_position.png', // Pfad zur Bilddatei
+        iconSize: [80, 80],   // Größe des Icons
+        iconAnchor: [20, 20], // Ankerpunkt (Mitte des Icons)
+        popupAnchor: [0, -20] // Position des Popups relativ zum Icon
+      });
+
+      // Roboter erstellen und auf Karte setzen
+      for (let i = 0; i < robots; i++) {
+        const start = paths[i % paths.length][0]; // Startpunkt aus Pfaden
+        const marker = L.marker(start, { icon: customIcon, title: `Robot ${i + 1}` }).addTo(map);
+        robotMarkers.push(marker);
+      }
+
+      // Pfade animieren
+      function animateRobots() {
+        robotMarkers.forEach((marker, index) => {
+          const path = paths[index % paths.length];
+          let currentIndex = 0;
+
+          function move() {
+            if (currentIndex < path.length - 1) {
+              currentIndex++;
+              marker.setLatLng(path[currentIndex]);
+              setTimeout(move, 1000 / speed); // Geschwindigkeit der Animation
+            }
+          }
+
+          move();
+        });
+      }
+
+      animateRobots();
+      // ---- Ende Neuer Abschnitt ----
     </script>
     <script type="module" src="simulation.js"></script>
   </body>
