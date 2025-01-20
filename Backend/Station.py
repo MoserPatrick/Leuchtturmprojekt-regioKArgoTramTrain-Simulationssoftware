@@ -1,4 +1,5 @@
 import heapq
+from jsonreader import generate_stationlist
 class Station:
     def __init__(self, name, trias_id = None, lat = None, long = None) :
         self.name = name
@@ -15,8 +16,7 @@ class Station:
             "trias_id": self.trias_id,
             "lines": self.lines,
             "lat": self.lat,
-            "long": self.long,
-            "connections": self.connections
+            "long": self.long
         }
     
     @classmethod
@@ -31,7 +31,23 @@ class Station:
 
         # Assign lists separately to avoid passing unknown arguments
         station.lines = data.get('lines', [])  # Default to an empty list if missing
-        station.connections = data.get('connections', [])  # Default to an empty list
+
+        #station.connections = data.get('connections', [])  # Default to an empty list
+
+    @classmethod
+    def from_dict_s(cls, data):
+        # Create instance with required parameters only
+        station = cls(
+            name=data.get('name'),
+            trias_id=data.get('trias_id'),
+            lat=data.get('lat'),
+            long=data.get('long')
+        )
+
+        # Assign lists separately to avoid passing unknown arguments
+        station.lines = data.get('lines', [])  # Default to an empty list if missing
+        
+        #station.connections = data.get('connections', [])  # Default to an empty list
 
         return station
 
