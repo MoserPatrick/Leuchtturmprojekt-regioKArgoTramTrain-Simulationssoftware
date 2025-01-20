@@ -18,6 +18,15 @@ class package_creator:
         response = requests.get(url)
         response_stations = requests.get(url_stations)
         stations = response_stations.json()
+        print(type(stations))
+        stations_obj_list = []
+
+        for station in stations:
+            stations_obj = Station.from_dict(station)
+            stations_obj_list.append(stations_obj)
+
+       
+        print("created station objects")
 
         # Check if the request was successful
         if response.status_code == 200:
@@ -46,7 +55,7 @@ class package_creator:
             length = random.uniform(1.0, 70.0)
             # get destination
             print("Getting Random Station")
-            remaining_stations = [station for station in stations if station != pos]
+            remaining_stations = [station for station in stations_obj_list if station != pos]
             dest = random.choice(remaining_stations)
             print("Random Station worked")
 

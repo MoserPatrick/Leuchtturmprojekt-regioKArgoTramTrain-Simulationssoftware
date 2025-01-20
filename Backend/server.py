@@ -56,12 +56,27 @@ def insert_robot(robot):
     conn = sqlite3.connect('simulation.db')
     cursor = conn.cursor()
 
-    # Serialize the package_list to a JSON string
-    package_list_json = json.dumps([package.to_dict_p() for package in robot.package_list])
+    '''# Serialize the package_list to a JSON string
+    
     position_json = json.dumps(robot.position) if isinstance(robot.position, dict) else robot.position
     dest_json = json.dumps(robot.dest) if isinstance(robot.dest, dict) else robot.dest
-    start_pos_json = json.dumps(robot.start_pos) if isinstance(robot.start_pos, dict) else robot.start_pos
+    start_pos_json = json.dumps(robot.start_pos) if isinstance(robot.start_pos, dict) else robot.start_pos'''
+    '''package_list_json = []
+    for pkg in robot.package_list:
+        package = pkg.to_dict_p()
+        package_list_json.append(package)'''
+    package_list_json = json.dumps([package.to_dict_p() for package in robot.package_list])
+    position_dict = robot.position.to_dict_s()
+    dest_dict = robot.dest.to_dict_s()
+    start_pos_dict = robot.start_pos.to_dict_s()
+    position_json = json.dumps(position_dict)
+    dest_json = json.dumps(dest_dict)
+    start_pos_json = json.dumps(start_pos_dict)
 
+
+    print("INSERTING WORKING")
+    print(type(position_json))
+    print(type(package_list_json))
     
     # Insert robot into the database
     cursor.execute('''
@@ -72,9 +87,7 @@ def insert_robot(robot):
     conn.close()
 
 def create_robot(data):
-        # Get the JSON data from the request
-        data = request.get_json()
-        
+        print("entering creating robots")
         # Get the JSON data from the request
         data = request.get_json()
         
@@ -83,28 +96,27 @@ def create_robot(data):
          # Convert position, dest, and start_pos from dict to Station objects
         position_data = data.get('position')
         print("bnefore StaTION")
-        json_position = json.loads(position_data)
-        position = Station.from_dict(json_position) if json_position else None
+        position = Station.from_dict(position_data) if position_data else None
         print("after station")
         energy = data.get('energy')
         numb_packages = data.get('numb_packages')
         # Ensure package_list is converted to Package objects
         package_list_data = data.get('package_list', [])
-        json_package_list = json.loads(package_list_data)
+        #json_package_list = json.loads(package_list_data)
         print("before package")
-        package_list = [Package.from_dict(pkg) for pkg in json_package_list]  # Convert each dictionary to a Package object
+        package_list = [Package.from_dict(pkg) for pkg in package_list_data]  # Convert each dictionary to a Package object
         print("after pakcage")
         status = data.get('status')
         # Convert dest from dict to Station object
         dest_data = data.get('dest')
-        json_dest = json.loads(dest_data)
-        dest = Station.from_dict(json_dest) if json_dest else None
+        #json_dest = json.loads(dest_data)
+        dest = Station.from_dict(dest_data) if dest_data else None
         speed = data.get('speed')
         weight = data.get('weight')
         # Convert start_pos from dict to Station object
         start_pos_data = data.get('start_pos')
-        json_start_pos= json.loads(start_pos_data)
-        start_pos = Station.from_dict(json_start_pos) if json_start_pos else None
+        #json_start_pos= json.loads(start_pos_data)
+        start_pos = Station.from_dict(start_pos_data) if start_pos_data else None
 
         updated_robot = Robot(id=id, position=position, energy=energy, numb_packages=numb_packages, package_list=package_list, status=status, dest=dest, speed=speed, weight=weight, start_pos=start_pos)
         return updated_robot
@@ -261,7 +273,7 @@ def add_robots():
         # Get JSON data from the request
         data = request.get_json()
         robot = create_robot(data)
-       
+        print("creating robot works")
         # Call the insert_robot function to insert the robot into the database
         insert_robot(robot)
 
@@ -572,5 +584,5 @@ def start_sim():
 
 
 if __name__ == '__main__':
-    #app.run(debug=True)
-    socketio.run(app, debug=True)
+    app.run(debug=True)
+    #socketio.run(app, debug=True)

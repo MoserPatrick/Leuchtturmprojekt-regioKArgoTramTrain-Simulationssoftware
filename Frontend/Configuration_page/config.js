@@ -33,8 +33,8 @@ document.getElementById("startSimulation").addEventListener("click", async funct
     await sendJSONStringWithPOST(url_start_sim, JSON.stringify(config_obj))
 
     // Weiterleitung zur Simulation-Seite
-    //window.location.href = "../Simulation_page/simulation.html";
-    //window.location.replace("../Simulation_page/simulation.html");
+    window.location.href = "../Simulation_page/simulation.html";
+    window.location.replace("../Simulation_page/simulation.html");
 });
 
 async function sendJSONStringWithPOST(url, jsonString) {

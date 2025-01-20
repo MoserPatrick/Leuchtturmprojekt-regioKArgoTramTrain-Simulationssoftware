@@ -193,7 +193,7 @@ async function show_robot(robot){
     test.classList.add('destination');
 
     test.addEventListener('click', () => test_button(robot));
-    info_sheet.appendChild(test)
+    //info_sheet.appendChild(test)
     info_sheet.appendChild(iconContainer);  // Or any other container
     info_sheet.appendChild(locationDestination)
 
