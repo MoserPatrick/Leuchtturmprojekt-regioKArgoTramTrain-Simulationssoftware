@@ -33,6 +33,8 @@ class Station:
 
         #station.connections = data.get('connections', [])  # Default to an empty list
 
+        return station
+
     '''@classmethod
     def from_dict_s(cls, data):
         # Create instance with required parameters only
