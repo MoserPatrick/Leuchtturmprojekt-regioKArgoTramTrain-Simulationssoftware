@@ -531,13 +531,28 @@ def load_robot():
 # Statin methods
 @app.route('/stations', methods=['GET'])
 def get_all_stations():
-    query = 'SELECT * FROM stations'
+    stationlist = []
+    numbers = ['1', '2', '3', '4', '5', '8', '17', '18', 'S1', 'S2', 'S3', 'S4', 'S5', 'S6', 'S7', 'S8', 'S9', 'S11', 'S12', 'S31', 'S32', 'S33', 'S51', 'S52', 'S71', 'S81']
+    # Lade alle Daten aus der stations-Tabelle
+    for table_name in numbers:
+        query = f'SELECT name, trias_id, lines, lat, long FROM "line_{table_name}"'
+        rows = fetch_data_from_db(query=query)
+        for row in rows:
+            name, trias_id, lines_json, lat, long = row
+            lines = json.loads(lines_json)  # Konvertiere das JSON-String zurück in ein Array
+            station = Station(name, trias_id, lat, long)
+            for line in lines:
+                station.add_line(line)
+            dictstation = station.to_dict_s()
+            stationlist.append(dictstation)
+    print(jsonify(stationlist))
+    #query = 'SELECT * FROM stations'
 
     # fetch data from database
-    data = fetch_data_from_db(query)
+    #data = fetch_data_from_db(query)
 
     # Prepare the data in a list of dictionaries to return as JSON
-    stations = []
+    '''stations = []
 
     for row in data:
         station = {
@@ -549,9 +564,9 @@ def get_all_stations():
             #'connections': row[5]
         }
         stations.append(station)
-
+'''
         # Return the data as JSON
-    return jsonify(stations)
+    return jsonify(stationlist)
 
 @app.route('/station/<trias_id>', methods=['GET'])
 def get_station(trias_id):

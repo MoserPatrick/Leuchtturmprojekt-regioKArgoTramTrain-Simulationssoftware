@@ -41,7 +41,10 @@ class Simulation:
         jread.calculate_weight_and_create_connections(inverted_sorted_stationlist, numbers)
         
 
-            
+        url_get_station = f"http://127.0.0.1:5000/stations"
+        response = requests.get(url_get_station)
+        print(response)
+
         # HELPING CODE
         # example for getting Robot from Database
         robot_id = 1
