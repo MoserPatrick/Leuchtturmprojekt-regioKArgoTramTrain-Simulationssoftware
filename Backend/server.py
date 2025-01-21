@@ -10,6 +10,7 @@ from Station  import Station
 from Robot import Robot
 from init_robot import init_robot
 from flask_socketio import SocketIO, emit
+from prepare import Prepare
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
@@ -23,7 +24,7 @@ def handle_connect():
 # helper Functions
 def fetch_data_from_db(query, params=()):
      # Connect to the SQLite database
-    conn = sqlite3.connect('simulation.db')
+    conn = sqlite3.connect('Backend/simulation.db')
     cursor = conn.cursor()
 
     # Execute the query with optional parameters
@@ -40,7 +41,7 @@ def fetch_data_from_db(query, params=()):
 
 def fetch_one(query, params=()):
      # Connect to the SQLite database
-    conn = sqlite3.connect('simulation.db')
+    conn = sqlite3.connect('Backend/simulation.db')
     cursor = conn.cursor()
 
     # Execute the query with optional parameters
@@ -56,7 +57,7 @@ def fetch_one(query, params=()):
 
 
 def insert_robot(robot):
-    conn = sqlite3.connect('simulation.db')
+    conn = sqlite3.connect('Backend/simulation.db')
     cursor = conn.cursor()
 
     '''# Serialize the package_list to a JSON string
@@ -252,7 +253,7 @@ def add_config():
         usage = data[5]
 
         # Insert data into the SQLite database
-        conn = sqlite3.connect('simulation.db')
+        conn = sqlite3.connect('Backend/simulation.db')
         cursor = conn.cursor()
         cursor.execute('''
             INSERT INTO configuration (numb_robots, max_packages, battery, capacity, sim_speed, usage)
@@ -370,7 +371,7 @@ def update_robots(robot_id):
         updates_query = ', '.join(updates)
         parameters.append(robot_id)
 
-        conn = sqlite3.connect('simulation.db')
+        conn = sqlite3.connect('Backend/simulation.db')
         cursor = conn.cursor()
 
         print("got till here")
@@ -414,7 +415,7 @@ def update_config():
             return jsonify({"error": f"Missing required fields: {', '.join(missing_fields)}"}), 400
 
         # Establish database connection
-        conn = sqlite3.connect('simulation.db')
+        conn = sqlite3.connect('Backend/simulation.db')
         cursor = conn.cursor()
 
         # Build the update query based on the provided data
@@ -455,7 +456,7 @@ def update_config():
 def config_delete():
     try:
         # Establish connection to the SQLite database
-        conn = sqlite3.connect('simulation.db')
+        conn = sqlite3.connect('Backend/simulation.db')
         cursor = conn.cursor()
 
         # SQL query to delete all records from the table (e.g., "items")
@@ -475,7 +476,7 @@ def config_delete():
 def robot_delete():
     try:
         # Establish connection to the SQLite database
-        conn = sqlite3.connect('simulation.db')
+        conn = sqlite3.connect('Backend/simulation.db')
         cursor = conn.cursor()
 
         # SQL query to delete all records from the table (e.g., "items")
@@ -609,6 +610,12 @@ def start_sim():
         init_robot.init_robot(numb_robots, max_packages, battery, sim_speed)
         return ("it works")
 
+@app.route('/dijkstra', methods=['GET'])
+def get_dijkstra():
+    print("GET DIJK")
+    result = Prepare.start()
+    print("disjk", result)
+    return jsonify(result)
 
 if __name__ == '__main__':
     #app.run(debug=True)

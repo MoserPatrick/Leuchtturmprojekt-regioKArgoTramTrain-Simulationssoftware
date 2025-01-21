@@ -24,7 +24,7 @@ print(numbers)
         print(element.get_connection())'''
 
 #define connection and cursor
-connection = sqlite3.connect('simulation.db')
+connection = sqlite3.connect('Backend/simulation.db')
 
 cursor = connection.cursor()
 
@@ -115,7 +115,7 @@ connection.commit()
 
 cursor.execute("SELECT * FROM configuration")
 cursor.execute("SELECT * FROM robots")
-cursor.execute("SELECT * FROM stations")
+#cursor.execute("SELECT * FROM stations")
 
 results = cursor.fetchall()
 cursor.close()

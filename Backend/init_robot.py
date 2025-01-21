@@ -28,7 +28,7 @@ class init_robot:
             weight = 0.0 
             speed = 0.0
             package_list = []
-            #creating packages-----------------------------------------------
+            
             package_list = package_creator.create_package(max_packages, package_list, pos)
             for package in package_list:
                 weight += package.weight

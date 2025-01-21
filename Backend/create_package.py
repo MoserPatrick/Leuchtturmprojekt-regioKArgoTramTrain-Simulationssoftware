@@ -46,7 +46,10 @@ class package_creator:
                 weight = random.uniform(1.0, capacity/float(numb_packages))
                 capacity -= weight
             else:
-                weight = random.uniform(1.0, capacity - weight)
+                if (int(numb_packages) > 1):
+                    weight = random.uniform(1.0, capacity - weight)
+                else:
+                    weight = random.uniform(1.0, capacity)
             # get width
             width = random.uniform(1.0, 50.0)
             # get height
@@ -63,7 +66,4 @@ class package_creator:
             package = Package(round(weight, 2), round(width, 2), round(height, 2), round(length, 2), dest)
             package_list.append(package)
             
-            # Dummy Data package Generator
-            #package = Package(30, 30, 10, 50, )
-            #package_list.append(package)
         return package_list

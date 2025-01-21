@@ -48,13 +48,8 @@ class Robot:
 #Methods
     def to_dict(self):
         # Convert object state to a dictionary (excluding methods)  
-        print("-____-----_---___----")
-        print("Type of self.package_list:", type(self.package_list))
         dict_package_list = []
         for pkg in self.package_list:
-            print(type(pkg))
-            #print(pkg.destination.connections)
-            #print(type(pkg.destination.connections))
             dict_package = pkg.to_dict_p()
             dict_package_list.append(dict_package)
 
@@ -71,6 +66,9 @@ class Robot:
         "start_pos": self.start_pos if isinstance(self.start_pos, dict) else self.start_pos.to_dict_s()
     }
     
+    def getdestandstart(self):
+        return self.dest, self.start_pos
+
     
     def returnHome():
         #TODO add homepath
@@ -78,10 +76,8 @@ class Robot:
 
 
     def charge(self):
-        print("Charging for ", self.energy)
         url_get_config = "http://127.0.0.1:5000/config"
         response = requests.get(url_get_config)
-        print("getting")
         json_response = json.loads(response.text)
         capacity = json_response['capacity']
         sim_speed = json_response['sim_speed']
@@ -89,14 +85,11 @@ class Robot:
         # Charging everything at once but take the given time
         if(self.energy > capacity):
             self.energy = capacity
-        print("sleep")
         time.sleep((capacity - self.energy) * sim_speed)
         self.energy = capacity
-        print(self.energy)
         url_patch_robot = f"http://127.0.0.1:5000/robot/{self.id}"
         json_robot = self.to_dict()
         requests.patch(url_patch_robot, json=json_robot)
-        print("finished patching")
         pass
 
 

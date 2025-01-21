@@ -29,12 +29,36 @@ document.getElementById("startSimulation").addEventListener("click", async funct
     console.log("CONFIGURATION")
     await sendJSONStringWithPOST(url, JSON.stringify(config_array))
     // create initial robots
-    url_start_sim = "http://127.0.0.1:5000/start_sim"
+    const url_start_sim = "http://127.0.0.1:5000/start_sim"
     await sendJSONStringWithPOST(url_start_sim, JSON.stringify(config_obj))
 
+    let dijkjson = await getDijkstraData()
+    let dijkstra = json.loads(dijkjson)
+    console.log("dijk"+dijkstra)
+
+    async function getDijkstraData() {
+        try {
+            const response = await fetch('http://127.0.0.1:5000/dijkstra'); // Fetch robots data
+            if (!response.ok) {
+                console.error(`Failed to fetch robots data: ${response.status} ${response.statusText}`);
+                return []; // Return an empty array if fetch fails
+            }
+      
+            const dijkstradata = response.json(); // Parse the response as JSON
+            console.log('Fetched robots data:', robotsData);
+      
+            // Process each robot into a standard object
+            return dijkstradata
+        } catch (error) {
+            console.error('Error fetching robots data:', error);
+            return []; // Return an empty array on error
+        }
+      }
+
+
     // Weiterleitung zur Simulation-Seite
-    window.location.href = "../Simulation_page/simulation.html";
-    window.location.replace("../Simulation_page/simulation.html");
+    //window.location.href = "../Simulation_page/simulation.html";
+    //window.location.replace("../Simulation_page/simulation.html");
 });
 
 async function sendJSONStringWithPOST(url, jsonString) {
