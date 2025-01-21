@@ -5,7 +5,7 @@ import random
 
 class init_robot:
 
-    def init_robot(numb_robots, max_packages, battery):
+    def init_robot(numb_robots, max_packages, battery, sim_speed):
 
         url_get_stations = "http://127.0.0.1:5000/stations"
         response_stations = requests.get(url_get_stations)
@@ -21,18 +21,21 @@ class init_robot:
 
         pos = start_pos
         status = "delivering"
-        weight = 0.0 #TODO
-        speed = 0.0
+        
+        
         url = "http://127.0.0.1:5000/robots"
         for i in range(int(numb_robots)):
+            weight = 0.0 
+            speed = 0.0
             package_list = []
             #creating packages-----------------------------------------------
             package_list = package_creator.create_package(max_packages, package_list, pos)
             for package in package_list:
                 weight += package.weight
-                speed = 2 - (weight/100)
+                speed = float(sim_speed) - (weight/100.0)
+            
             print("create Robot object")
-            robot = Robot(i+1, pos, battery, max_packages, package_list, status, dest, speed, weight, start_pos)
+            robot = Robot(i+1, pos, battery, max_packages, package_list, status, dest, round(speed, 2), round(weight, 2), start_pos)
             print("finished creating Robot")
             json_robot = robot.to_dict()
             response = requests.post(url, json=json_robot)

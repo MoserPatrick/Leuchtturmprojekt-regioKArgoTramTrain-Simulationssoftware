@@ -43,10 +43,10 @@ class package_creator:
             # Random Package Generator
             # get weigth
             if (i != int(numb_packages)-1):
-                weight = random.uniform(1.0, capacity)
+                weight = random.uniform(1.0, capacity/float(numb_packages))
                 capacity -= weight
             else:
-                weight = capacity
+                weight = random.uniform(1.0, capacity - weight)
             # get width
             width = random.uniform(1.0, 50.0)
             # get height
@@ -60,7 +60,7 @@ class package_creator:
             print("Random Station worked")
 
             # create Package
-            package = Package(weight, width, height, length, dest)
+            package = Package(round(weight, 2), round(width, 2), round(height, 2), round(length, 2), dest)
             package_list.append(package)
             
             # Dummy Data package Generator
