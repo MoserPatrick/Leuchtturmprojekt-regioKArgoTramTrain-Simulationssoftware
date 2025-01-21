@@ -590,7 +590,8 @@ def start_sim():
         numb_robots = data['numb_robots']
         max_packages = data['max_packages']
         battery = data['battery']
-        init_robot.init_robot(numb_robots, max_packages, battery)
+        sim_speed = data['sim_speed']
+        init_robot.init_robot(numb_robots, max_packages, battery, sim_speed)
         return ("it works")
 
 
